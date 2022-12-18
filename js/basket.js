@@ -66,11 +66,19 @@ const generateCartProduct = (img, title, price, id) => {
    `;
 };
 
-const deleteProducts = (productParent) => {
-   let id = productParent.querySelector('.item-basket').dataset.id;
-   document.querySelector(`.product-card__content[data-id="${id}"]`).querySelector('.product-card__icon_basket').disabled = false;
+const deleteProducts = productParent => {
+   let id = productParent && productParent.dataset.id;
 
-   let currentPrice = parseInt(priceWithoutSpaces(productParent.querySelector('.item-basket__price').textContent));
+   if (!id) return;
+
+   const productBtn = document.querySelector(`.product-card__content[data-id="${id}"] .product-card__icon_basket`);
+
+   if (productBtn) {
+      productBtn.disabled = false;
+      productBtn.classList.remove("product-card__icon_active");
+   }
+
+   let currentPrice = parseInt(priceWithoutSpaces(productParent.querySelector(".item-basket__price").textContent));
    minusFullPrice(currentPrice);
    printFullPrice();
    productParent.remove();
@@ -78,7 +86,7 @@ const deleteProducts = (productParent) => {
 };
 
 
-productsBtn.forEach(el => { 
+productsBtn.forEach(el => {
    el.closest('.product-card__content').setAttribute('data-id', randomId());
    el.addEventListener('click', (e) => {
       let self = e.currentTarget;
@@ -92,13 +100,15 @@ productsBtn.forEach(el => {
       printFullPrice();
       basketProductList.insertAdjacentHTML('afterbegin', generateCartProduct(img, title, priceNumber, id));
       printQuantity();
-      self.disabбled = true;
+      self.disabled = true;
       self.classList.add('product-card__icon_active');
    });
 });
 
-basketProductList.addEventListener('click', (e) => {
-   if (e.target.classList.contains('item-basket__button-reset')) {
-      deleteProducts(e.target.closest('.item-basket'));
-   }
+basketProductList.addEventListener("click", e => {
+   const btn = e.target.closest(".item-basket__button-reset");
+
+   if (!btn) return;
+
+   deleteProducts(btn.closest(".item-basket"));
 });

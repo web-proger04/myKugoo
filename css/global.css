@@ -772,6 +772,10 @@ body {
    object-fit: cover;
 }
 
+.catalog-modal__item:hover .catalog-modal__info-modal-catalog {
+   display: block;
+}
+
 .middle-header__item button p {
    font-family: 'Jost';
    font-style: normal;
@@ -782,14 +786,20 @@ body {
    margin: 0 0 0 10px;
 }
 
+.middle-header__item_basket:hover .basket {
+   transform: scale(1);
+}
+
 .middle-header__basket {}
 
 .basket {
    position: absolute;
-   top: 80px;
+   top: 65px;
    right: 15px;
    z-index: 101;
    width: 305px;
+   transform: scale(0);
+   transition: transform 250ms ease;
 }
 
 .basket__header {
@@ -1512,12 +1522,14 @@ body {
 .product-card__image img {
    width: 100%;
    height: 100%;
-   object-fit: cover;
+   object-fit: contain;
 }
 
 .product-card__info {
    padding: 0 25px;
    margin: 0 0 25px 0;
+   display: grid;
+   grid-template: 1fr max-content max-content / 1fr;
 }
 
 .product-card__title {

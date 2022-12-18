@@ -1,15 +1,17 @@
-const catalogModalButton = document.querySelector('.middle-header__button');
 const catalogModal = document.querySelector('.catalog-modal');
+const catalogBtn = document.querySelector('.middle-header__button');
 
 document.addEventListener('click', (event) => {
-   const element = event.target;
+   const eventBtn = event.target.closest('.middle-header__button');
 
-   if (element !== catalogModalButton) {
-      catalogModalButton.classList.remove('active');
-      catalogModal.classList.remove('active');
-   } else {
-      catalogModalButton.classList.toggle('active');
-      catalogModal.classList.toggle('active');
-   }
+   if (!eventBtn) return handleCatalog(catalogBtn, catalogModal, false);
 
+   const isActive = eventBtn.classList.contains('active');
+
+   handleCatalog(eventBtn, catalogModal, !isActive)
 });
+
+const handleCatalog = (btn, catalog, force) => {
+   btn.classList.toggle('active', force);
+   catalog.classList.toggle('active', force)
+};
