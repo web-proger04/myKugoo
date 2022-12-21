@@ -1,33 +1,6 @@
 <?php
 $db = new PDO("mysql:host=localhost;dbname=mykugoo", "root", "");
 
-// карточки товара
-$infoCard = [];
-
-if ($query = $db->query("SELECT * FROM `info-card`")) {
-   $infoCard = $query->fetchAll(PDO::FETCH_ASSOC);
-} else {
-   print_r($db->errorInfo());
-}
-
-// статьи в блоге
-$infoBlogArticles = [];
-
-if ($query = $db->query("SELECT * FROM `blog-articles`")) {
-   $infoBlogArticles = $query->fetchAll(PDO::FETCH_ASSOC);
-} else {
-   print_r($db->errorInfo());
-}
-
-// частые вопросы
-$infoQuestions = [];
-
-if ($query = $db->query("SELECT * FROM `questions`")) {
-   $infoQuestions = $query->fetchAll(PDO::FETCH_ASSOC);
-} else {
-   print_r($db->errorInfo());
-}
-
 // популярные товары
 $infoPopularProducts = [];
 
@@ -46,7 +19,7 @@ if ($query = $db->query("SELECT * FROM `popular-product`")) {
    <meta charset="UTF-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Kugoo</title>
+   <title>Kugoo Kirin M4</title>
    <link rel="icon" href="/img/logo/Kugoo.svg" type="image/svg">
    <link rel="preconnect" href="https://fonts.googleapis.com">
    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -56,13 +29,11 @@ if ($query = $db->query("SELECT * FROM `popular-product`")) {
    <link rel="stylesheet" href="/css/global.css">
    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
    <script defer src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+   <script defer src="/js/cardSlider.js"></script>
    <script defer src="/js/basket.js"></script>
    <script defer src="/js/rowFeedbackSlider.js"></script>
-   <script defer src="/js/sliderReviews.js"></script>
    <script defer src="/js/catalog-modal.js"></script>
-   <script defer src="/js/pricesTabs.js"></script>
-   <script defer src="/js/blogArticlesSlider.js"></script>
-   <script defer src="/js/accordion.js"></script>
+   <script defer src="/js/tabsCard.js"></script>
    <script defer src="/js/tel.js"></script>
    <script defer src="/js/tel-input.js"></script>
    <script defer src="/js/popups.js"></script>
@@ -244,7 +215,8 @@ if ($query = $db->query("SELECT * FROM `popular-product`")) {
                                     Электросамокаты
                                  </p>
                               </a>
-                              <ul class="catalog-modal__info-modal-catalog info-modal-catalog info-modal-catalog_electric-scooters">
+                              <ul
+                                 class="catalog-modal__info-modal-catalog info-modal-catalog info-modal-catalog_electric-scooters">
                                  <li class="info-modal-catalog__item">
                                     <ul class="info-modal-catalog__desk">
                                        <li class="info-modal-catalog__subtitle">
@@ -305,7 +277,8 @@ if ($query = $db->query("SELECT * FROM `popular-product`")) {
                                     Электроскутеры
                                  </p>
                               </a>
-                              <ul class="catalog-modal__info-modal-catalog info-modal-catalog info-modal-catalog_scooters">
+                              <ul
+                                 class="catalog-modal__info-modal-catalog info-modal-catalog info-modal-catalog_scooters">
                                  <li class="info-modal-catalog__item">
                                     <ul class="info-modal-catalog__desk">
                                        <li class="info-modal-catalog__subtitle">
@@ -345,7 +318,8 @@ if ($query = $db->query("SELECT * FROM `popular-product`")) {
                                     Электровелосипеды
                                  </p>
                               </a>
-                              <ul class="catalog-modal__info-modal-catalog info-modal-catalog info-modal-catalog_electric-bicycles">
+                              <ul
+                                 class="catalog-modal__info-modal-catalog info-modal-catalog info-modal-catalog_electric-bicycles">
                                  <li class="info-modal-catalog__item">
                                     <ul class="info-modal-catalog__desk">
                                        <li class="info-modal-catalog__subtitle">
@@ -394,7 +368,8 @@ if ($query = $db->query("SELECT * FROM `popular-product`")) {
                                     Робот-пылесосы
                                  </p>
                               </a>
-                              <ul class="catalog-modal__info-modal-catalog info-modal-catalog info-modal-catalog_robot-cleaner">
+                              <ul
+                                 class="catalog-modal__info-modal-catalog info-modal-catalog info-modal-catalog_robot-cleaner">
                                  <li class="info-modal-catalog__item">
                                     <ul class="info-modal-catalog__desk">
                                        <li class="info-modal-catalog__subtitle">
@@ -437,7 +412,8 @@ if ($query = $db->query("SELECT * FROM `popular-product`")) {
                                     Весы
                                  </p>
                               </a>
-                              <ul class="catalog-modal__info-modal-catalog info-modal-catalog info-modal-catalog_scales">
+                              <ul
+                                 class="catalog-modal__info-modal-catalog info-modal-catalog info-modal-catalog_scales">
                                  <li class="info-modal-catalog__item">
                                     <ul class="info-modal-catalog__desk">
                                        <li class="info-modal-catalog__subtitle">
@@ -600,905 +576,993 @@ if ($query = $db->query("SELECT * FROM `popular-product`")) {
       <!-- main -->
       <main class="main">
 
-         <!-- scooters-banner -->
-         <section class="scooters-banner">
-            <div class="scooters-banner__container container">
-               <div class="scooters-banner__offer">
-                  <p class="scooters-banner__subtitle">
-                     Новинка
-                  </p>
-                  <h2 class="scooters-banner__big-title big-title">
-                     Электросамокаты Kugoo Kirin от официального дилера
-                  </h2>
-                  <p class="scooters-banner__text">
-                     с бесплатной доставкой по РФ от 1 дня
-                  </p>
-                  <a href="/pages/product-catalog.php" class="scooters-banner__button button">
-                     Перейти в католог
-                  </a>
-               </div>
-               <div class="scooters-banner__image">
-                  <img src="/img/scooters-banner/scooters-banner-image.png"
-                     alt="Электросамокаты Kugoo Kirin от официального дилера">
-               </div>
-               <p class="scooters-banner__big-text">kirin</p>
-               <a href="#" class="scooters-banner__link">
-                  <p class="scooters-banner__button-top">
-                     Тест-драйв и обучение
-                  </p>
-                  <p class="scooters-banner__button-bottom">
-                     Бесплатно
-                  </p>
-                  <div class="scooters-banner__line">
-                     <div class="scooters-banner__circle scooters-banner__circle_1"></div>
-                     <div class="scooters-banner__circle scooters-banner__circle_2"></div>
-                  </div>
-               </a>
-            </div>
-         </section>
-         <!-- scooters-banner -->
+         <!-- nav-pages -->
+         <nav class="nav-pages container">
+            <a href="/index.php" class="nav-pages__link">
+               <svg class="nav-pages__icon" width="15" height="15" viewBox="0 0 15 15" fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path
+                     d="M13.8643 7.39823L8.20416 1.741L7.82477 1.36161C7.73832 1.27574 7.62142 1.22754 7.49957 1.22754C7.37772 1.22754 7.26082 1.27574 7.17438 1.36161L1.13483 7.39823C1.04625 7.48646 0.976245 7.59155 0.928946 7.70728C0.881647 7.82301 0.858012 7.94704 0.859436 8.07206C0.865295 8.58768 1.29449 8.9993 1.81012 8.9993H2.43268V13.7703H12.5665V8.9993H13.2022C13.4527 8.9993 13.6885 8.90116 13.8658 8.72391C13.9531 8.63692 14.0222 8.53347 14.0692 8.41957C14.1162 8.30567 14.1402 8.18357 14.1397 8.06034C14.1397 7.81132 14.0416 7.57548 13.8643 7.39823ZM8.31988 12.7156H6.67926V9.72733H8.31988V12.7156ZM11.5118 7.94462V12.7156H9.25739V9.37577C9.25739 9.05204 8.99518 8.78983 8.67145 8.78983H6.3277C6.00397 8.78983 5.74176 9.05204 5.74176 9.37577V12.7156H3.48737V7.94462H2.08112L7.50104 2.52909L7.83942 2.86747L12.9195 7.94462H11.5118Z"
+                     fill="#5D6C7B" />
+               </svg>
+               Главная /
+            </a>
+            <a href="/pages/product-catalog.php" class="nav-pages__link">
+               Каталог /
+            </a>
+            <a href="#" class="nav-pages__link">
+               Электросамокаты /
+            </a>
+            <a href="/pages/card-product/KugooKirinM4.php" class="nav-pages__link nav-pages__link_active">
+               Kugoo Kirin M4
+            </a>
+         </nav>
+         <!-- nav-pages -->
 
-         <!-- triggers -->
-         <div class="triggers">
-            <div class="triggers__container container">
-               <ul class="triggers__list">
-                  <li class="triggers__item">
-                     <h3 class="triggers__middle-title middle-title">
-                        Гарантия 1 год
-                     </h3>
-                     <p class="triggers__text">
-                        на весь ассортимент
-                     </p>
-                  </li>
-                  <li class="triggers__item">
-                     <h3 class="triggers__middle-title middle-title">
-                        рассрочка
-                     </h3>
-                     <p class="triggers__text">
-                        от 6 месяцев
-                     </p>
-                  </li>
-                  <li class="triggers__item">
-                     <h3 class="triggers__middle-title middle-title">
-                        Подарки
-                     </h3>
-                     <p class="triggers__text">
-                        и бонусам к покупкам
-                     </p>
-                  </li>
-               </ul>
-               <div class="triggers__reviews">
-                  <div class="triggers__icon">
-                     <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <rect width="56" height="56" rx="5" fill="#FC3F1D" />
-                        <path
-                           d="M37 43H32.0066V17.9198H29.7769C25.6942 17.9198 23.5587 19.9912 23.5587 23.0824C23.5587 26.5879 25.0347 28.2132 28.081 30.2846L30.5934 32.0055L23.3702 43H18L24.5008 33.1846C20.7636 30.4758 18.6595 27.8308 18.6595 23.3692C18.6595 17.7923 22.4909 14 29.7455 14H36.9686V43H37Z"
-                           fill="white" />
-                     </svg>
-                  </div>
-                  <div class="triggers__info">
-                     <p class="triggers__subtitle">
-                        Яндекс отзывы
-                     </p>
-                     <svg class="triggers__star" width="14" height="13" viewBox="0 0 14 13" fill="none"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path
-                           d="M7 0L8.84741 4.45726L13.6574 4.83688L9.98917 7.97124L11.1145 12.6631L7 10.143L2.8855 12.6631L4.01083 7.97124L0.342604 4.83688L5.15259 4.45726L7 0Z"
-                           fill="#FFD12E" />
-                     </svg>
-                     <span class="triggers__estimation">
-                        4,9
-                     </span>
-                  </div>
-               </div>
-            </div>
-         </div>
-         <!-- triggers -->
+         <!-- card -->
+         <article class="card">
+            <div class="card__container container">
+               <div class="card__wrapper">
+                  <div class="card__inner-wrapper">
+                     <div class="card__slider-card slider-card">
+                        <div class="slider-card__new">
+                           Новинка 2022
+                        </div>
 
-         <!-- electric-scooters -->
-         <section class="electric-scooters">
-            <div class="electric-scooters__container container">
-               <div class="electric-scooters__header">
-                  <h2 class="electric-scooters__big-title big-title">
-                     Электросамокаты
-                  </h2>
-                  <ul class="electric-scooters__list">
-                     <li class="electric-scooters__item">
-                        <button class="electric-scooters__button electric-scooters__button_active">
-                           Хиты продаж
-                        </button>
-                     </li>
-                     <li class="electric-scooters__item">
-                        <button class="electric-scooters__button">
-                           Для города
-                        </button>
-                     </li>
-                     <li class="electric-scooters__item">
-                        <button class="electric-scooters__button">
-                           Для взрослых
-                        </button>
-                     </li>
-                     <li class="electric-scooters__item">
-                        <button class="electric-scooters__button">
-                           Для детей
-                        </button>
-                     </li>
-                  </ul>
-               </div>
-               <div class="electric-scooters__product-card product-card">
-                  <?php foreach ($infoCard as $infoCardItem): ?>
-                  <article class="product-card__content">
-                     <div class="product-card__header">
-                        <span class="product-card__subtitle product-card__subtitle_hit">
-                           <?= $infoCardItem['hype'] ?>
-                        </span>
-                        <button type="button" class="product-card__icon-card icon-card icon-card_no-bg">
-                           <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
-                              xmlns="http://www.w3.org/2000/svg">
-                              <mask id="path-1-inside-1_7825_20528" fill="white">
-                                 <path
-                                    d="M19.4141 11.2663H18.7766L16.7349 6.31856C17.0208 6.27958 17.2413 6.03466 17.2413 5.73754C17.2413 5.41333 16.979 5.15049 16.6554 5.15049H11.6177C11.3769 4.48044 10.7363 4 9.98559 4C9.23488 4 8.59422 4.48048 8.3534 5.15049H3.34465C3.02105 5.15049 2.75871 5.41333 2.75871 5.73754C2.75871 6.03466 2.97926 6.27958 3.26512 6.31856L1.22344 11.2663H0.585938C0.262344 11.2663 0 11.5291 0 11.8533C0 14.1398 1.85668 16 4.13883 16C6.42098 16 8.27766 14.1398 8.27766 11.8533C8.27766 11.5291 8.01531 11.2663 7.69172 11.2663H7.05418L5.01504 6.32458H8.3534C8.59422 6.99464 9.23484 7.47508 9.98559 7.47508C10.7363 7.47508 11.3769 6.99464 11.6177 6.32458H14.985L12.9459 11.2663H12.3083C11.9847 11.2663 11.7224 11.5291 11.7224 11.8533C11.7224 14.1398 13.5791 16 15.8612 16C18.1434 16 20 14.1398 20 11.8533C20 11.5291 19.7377 11.2663 19.4141 11.2663ZM4.13883 14.8259C2.70332 14.8259 1.5027 13.7993 1.22996 12.4404H7.0477C6.77496 13.7993 5.57434 14.8259 4.13883 14.8259ZM5.78613 11.2663H2.49152L4.13883 7.27423L5.78613 11.2663ZM9.98555 6.30098C9.67543 6.30098 9.42316 6.04824 9.42316 5.73754C9.42316 5.42683 9.67543 5.17409 9.98555 5.17409C10.2956 5.17409 10.5479 5.42683 10.5479 5.73754C10.5479 6.04824 10.2957 6.30098 9.98555 6.30098ZM15.8612 7.27423L17.5085 11.2663H14.2139L15.8612 7.27423ZM15.8612 14.8259C14.4257 14.8259 13.225 13.7993 12.9523 12.4404H18.77C18.4973 13.7993 17.2966 14.8259 15.8612 14.8259Z" />
-                              </mask>
-                              <path
-                                 d="M19.4141 11.2663H18.7766L16.7349 6.31856C17.0208 6.27958 17.2413 6.03466 17.2413 5.73754C17.2413 5.41333 16.979 5.15049 16.6554 5.15049H11.6177C11.3769 4.48044 10.7363 4 9.98559 4C9.23488 4 8.59422 4.48048 8.3534 5.15049H3.34465C3.02105 5.15049 2.75871 5.41333 2.75871 5.73754C2.75871 6.03466 2.97926 6.27958 3.26512 6.31856L1.22344 11.2663H0.585938C0.262344 11.2663 0 11.5291 0 11.8533C0 14.1398 1.85668 16 4.13883 16C6.42098 16 8.27766 14.1398 8.27766 11.8533C8.27766 11.5291 8.01531 11.2663 7.69172 11.2663H7.05418L5.01504 6.32458H8.3534C8.59422 6.99464 9.23484 7.47508 9.98559 7.47508C10.7363 7.47508 11.3769 6.99464 11.6177 6.32458H14.985L12.9459 11.2663H12.3083C11.9847 11.2663 11.7224 11.5291 11.7224 11.8533C11.7224 14.1398 13.5791 16 15.8612 16C18.1434 16 20 14.1398 20 11.8533C20 11.5291 19.7377 11.2663 19.4141 11.2663ZM4.13883 14.8259C2.70332 14.8259 1.5027 13.7993 1.22996 12.4404H7.0477C6.77496 13.7993 5.57434 14.8259 4.13883 14.8259ZM5.78613 11.2663H2.49152L4.13883 7.27423L5.78613 11.2663ZM9.98555 6.30098C9.67543 6.30098 9.42316 6.04824 9.42316 5.73754C9.42316 5.42683 9.67543 5.17409 9.98555 5.17409C10.2956 5.17409 10.5479 5.42683 10.5479 5.73754C10.5479 6.04824 10.2957 6.30098 9.98555 6.30098ZM15.8612 7.27423L17.5085 11.2663H14.2139L15.8612 7.27423ZM15.8612 14.8259C14.4257 14.8259 13.225 13.7993 12.9523 12.4404H18.77C18.4973 13.7993 17.2966 14.8259 15.8612 14.8259Z"
-                                 fill="#282739" />
-                              <path
-                                 d="M18.7766 11.2663L15.079 12.7921L16.1 15.2663H18.7766V11.2663ZM16.7349 6.31856L16.1946 2.35522L11.0611 3.05512L13.0374 7.84433L16.7349 6.31856ZM11.6177 5.15049L7.85347 6.50339L8.80485 9.15049H11.6177V5.15049ZM8.3534 5.15049V9.15049H11.1662L12.1176 6.50345L8.3534 5.15049ZM3.26512 6.31856L6.96268 7.84435L8.93891 3.05522L3.80556 2.35523L3.26512 6.31856ZM1.22344 11.2663V15.2663H3.90002L4.921 12.7921L1.22344 11.2663ZM7.05418 11.2663L3.35661 12.7921L4.37757 15.2663H7.05418V11.2663ZM5.01504 6.32458V2.32458H-0.962677L1.31747 7.85035L5.01504 6.32458ZM8.3534 6.32458L12.1177 4.97169L11.1663 2.32458H8.3534V6.32458ZM11.6177 6.32458V2.32458H8.80485L7.85347 4.97169L11.6177 6.32458ZM14.985 6.32458L18.6826 7.85034L20.9627 2.32458L14.985 2.32458V6.32458ZM12.9459 11.2663V15.2663H15.6225L16.6434 12.7921L12.9459 11.2663ZM1.22996 12.4404V8.44039H-3.65259L-2.69183 13.2275L1.22996 12.4404ZM7.0477 12.4404L10.9695 13.2275L11.9302 8.44039H7.0477V12.4404ZM5.78613 11.2663V15.2663H11.7639L9.4837 9.74052L5.78613 11.2663ZM2.49152 11.2663L-1.20604 9.74052L-3.48623 15.2663H2.49152V11.2663ZM4.13883 7.27423L7.83639 5.74845L4.13883 -3.21221L0.441262 5.74845L4.13883 7.27423ZM15.8612 7.27423L19.5587 5.74845L15.8612 -3.21221L12.1636 5.74845L15.8612 7.27423ZM17.5085 11.2663V15.2663H23.4862L21.206 9.74052L17.5085 11.2663ZM14.2139 11.2663L10.5163 9.74052L8.23612 15.2663H14.2139V11.2663ZM12.9523 12.4404V8.44039H8.06975L9.03051 13.2275L12.9523 12.4404ZM18.77 12.4404L22.6918 13.2275L23.6526 8.44039H18.77V12.4404ZM19.4141 7.2663H18.7766V15.2663H19.4141V7.2663ZM22.4741 9.74053L20.4325 4.79279L13.0374 7.84433L15.079 12.7921L22.4741 9.74053ZM17.2753 10.2819C19.5145 9.97659 21.2413 8.06373 21.2413 5.73754H13.2413C13.2413 4.00559 14.5271 2.58257 16.1946 2.35522L17.2753 10.2819ZM21.2413 5.73754C21.2413 3.21132 19.1952 1.15049 16.6554 1.15049V9.15049C14.7627 9.15049 13.2413 7.61534 13.2413 5.73754H21.2413ZM16.6554 1.15049H11.6177V9.15049H16.6554V1.15049ZM15.382 3.7976C14.5916 1.5985 12.4857 0 9.98559 0V8C8.98691 8 8.1622 7.36238 7.85347 6.50339L15.382 3.7976ZM9.98559 0C7.48551 0 5.37954 1.59853 4.58916 3.79753L12.1176 6.50345C11.8089 7.36243 10.9843 8 9.98559 8V0ZM8.3534 1.15049H3.34465V9.15049H8.3534V1.15049ZM3.34465 1.15049C0.804792 1.15049 -1.24129 3.21132 -1.24129 5.73754H6.75871C6.75871 7.61534 5.23732 9.15049 3.34465 9.15049V1.15049ZM-1.24129 5.73754C-1.24129 8.06397 0.48576 9.97658 2.72468 10.2819L3.80556 2.35523C5.47276 2.58257 6.75871 4.00536 6.75871 5.73754H-1.24129ZM-0.432443 4.79276L-2.47412 9.7405L4.921 12.7921L6.96268 7.84435L-0.432443 4.79276ZM1.22344 7.2663H0.585938V15.2663H1.22344V7.2663ZM0.585938 7.2663C-1.95392 7.2663 -4 9.32713 -4 11.8533H4C4 13.7311 2.47861 15.2663 0.585938 15.2663V7.2663ZM-4 11.8533C-4 16.3418 -0.359583 20 4.13883 20V12C4.11623 12 4.10308 11.9962 4.09233 11.9916C4.07884 11.9859 4.06166 11.9753 4.04471 11.9583C4.02775 11.9414 4.01642 11.9233 4.00988 11.9079C4.00449 11.8951 4 11.8792 4 11.8533H-4ZM4.13883 20C8.63724 20 12.2777 16.3418 12.2777 11.8533H4.27766C4.27766 11.8792 4.27317 11.8951 4.26777 11.9079C4.26124 11.9233 4.2499 11.9414 4.23295 11.9583C4.216 11.9753 4.19882 11.9859 4.18533 11.9916C4.17458 11.9962 4.16142 12 4.13883 12V20ZM12.2777 11.8533C12.2777 9.32713 10.2316 7.2663 7.69172 7.2663V15.2663C5.79905 15.2663 4.27766 13.7311 4.27766 11.8533H12.2777ZM7.69172 7.2663H7.05418V15.2663H7.69172V7.2663ZM10.7518 9.74054L8.71261 4.79882L1.31747 7.85035L3.35661 12.7921L10.7518 9.74054ZM5.01504 10.3246H8.3534V2.32458H5.01504V10.3246ZM4.58913 7.67748C5.37952 9.87663 7.48552 11.4751 9.98559 11.4751V3.47508C10.9842 3.47508 11.8089 4.11264 12.1177 4.97169L4.58913 7.67748ZM9.98559 11.4751C12.4857 11.4751 14.5916 9.87658 15.382 7.67748L7.85347 4.97169C8.1622 4.1127 8.98691 3.47508 9.98559 3.47508V11.4751ZM11.6177 10.3246H14.985V2.32458H11.6177V10.3246ZM11.2874 4.79882L9.24829 9.74054L16.6434 12.7921L18.6826 7.85034L11.2874 4.79882ZM12.9459 7.2663H12.3083V15.2663H12.9459V7.2663ZM12.3083 7.2663C9.76846 7.2663 7.72238 9.32713 7.72238 11.8533H15.7224C15.7224 13.7311 14.201 15.2663 12.3083 15.2663V7.2663ZM7.72238 11.8533C7.72238 16.3418 11.3628 20 15.8612 20V12C15.8386 12 15.8255 11.9962 15.8147 11.9916C15.8012 11.9859 15.784 11.9753 15.7671 11.9583C15.7501 11.9414 15.7388 11.9233 15.7323 11.9079C15.7269 11.8951 15.7224 11.8792 15.7224 11.8533H7.72238ZM15.8612 20C20.3597 20 24 16.3418 24 11.8533H16C16 11.8792 15.9955 11.8951 15.9901 11.9079C15.9836 11.9234 15.9722 11.9414 15.9553 11.9584C15.9383 11.9753 15.9212 11.9859 15.9077 11.9916C15.897 11.9962 15.8838 12 15.8612 12V20ZM24 11.8533C24 9.32713 21.9539 7.2663 19.4141 7.2663V15.2663C17.5214 15.2663 16 13.7311 16 11.8533H24ZM4.13883 10.8259C4.65422 10.8259 5.05846 11.1884 5.15176 11.6533L-2.69183 13.2275C-2.05307 16.4102 0.752424 18.8259 4.13883 18.8259V10.8259ZM1.22996 16.4404H7.0477V8.44039H1.22996V16.4404ZM3.1259 11.6533C3.2192 11.1884 3.62344 10.8259 4.13883 10.8259V18.8259C7.52523 18.8259 10.3307 16.4102 10.9695 13.2275L3.1259 11.6533ZM5.78613 7.2663H2.49152V15.2663H5.78613V7.2663ZM6.18909 12.7921L7.83639 8.80001L0.441262 5.74845L-1.20604 9.74052L6.18909 12.7921ZM0.441262 8.80001L2.08857 12.7921L9.4837 9.74052L7.83639 5.74845L0.441262 8.80001ZM9.98555 2.30098C11.8917 2.30098 13.4232 3.84623 13.4232 5.73754H5.42316C5.42316 8.25025 7.45917 10.301 9.98555 10.301V2.30098ZM13.4232 5.73754C13.4232 7.62884 11.8917 9.17409 9.98555 9.17409V1.17409C7.45917 1.17409 5.42316 3.22483 5.42316 5.73754H13.4232ZM9.98555 9.17409C8.07954 9.17409 6.54793 7.62902 6.54793 5.73754H14.5479C14.5479 3.22465 12.5117 1.17409 9.98555 1.17409V9.17409ZM6.54793 5.73754C6.54793 3.84623 8.0794 2.30098 9.98555 2.30098V10.301C12.5119 10.301 14.5479 8.25025 14.5479 5.73754H6.54793ZM12.1636 8.80001L13.8109 12.7921L21.206 9.74052L19.5587 5.74845L12.1636 8.80001ZM17.5085 7.2663H14.2139V15.2663H17.5085V7.2663ZM17.9114 12.7921L19.5587 8.80001L12.1636 5.74845L10.5163 9.74052L17.9114 12.7921ZM15.8612 10.8259C16.3766 10.8259 16.7808 11.1884 16.8741 11.6533L9.03051 13.2275C9.66928 16.4102 12.4748 18.8259 15.8612 18.8259V10.8259ZM12.9523 16.4404H18.77V8.44039H12.9523V16.4404ZM14.8482 11.6533C14.9415 11.1884 15.3458 10.8259 15.8612 10.8259V18.8259C19.2475 18.8259 22.0531 16.4102 22.6918 13.2275L14.8482 11.6533Z"
-                                 fill="#282739" mask="url(#path-1-inside-1_7825_20528)" />
-                           </svg>
-                        </button>
-                     </div>
-                     <a href="<?= $infoCardItem['link'] ?>" class="product-card__image">
-                        <img src="<?= $infoCardItem['image'] ?>" alt="Самокат">
-                     </a>
-                     <div class="product-card__info">
-                        <a href="<?= $infoCardItem['link'] ?>" class="product-card__title">
-                           <?= $infoCardItem['title'] ?>
-                        </a>
-                        <ul class="product-card__desk-list desk-list">
-                           <li class="desk-list__item">
-                              <svg class="desk-list__icon" width="18" height="18" viewBox="0 0 18 18" fill="none"
-                                 xmlns="http://www.w3.org/2000/svg">
-                                 <path
-                                    d="M16.5 3.75001V2.99999C16.5 2.58655 16.1638 2.25 15.75 2.25H13.5C13.0862 2.25 12.75 2.58655 12.75 2.99999V3.74998H12.5303L12.2198 3.43944C11.9407 3.16002 11.554 2.99999 11.1592 2.99999H6.84081C6.44604 2.99999 6.05932 3.16002 5.78025 3.43944L5.46971 3.74998H5.24999V2.99999C5.24999 2.58655 4.91382 2.25 4.5 2.25H2.25C1.83618 2.25 1.50001 2.58655 1.50001 2.99999V3.74998C0.673102 3.75001 0 4.42273 0 5.24999V14.25C0 15.0773 0.673102 15.75 1.50001 15.75H16.5C17.3269 15.75 18 15.0773 18 14.25V5.24999C18 4.42273 17.3269 3.75001 16.5 3.75001ZM4.12499 7.49999H2.62501C2.41773 7.49999 2.25 7.33226 2.25 7.12498C2.25 6.91773 2.41773 6.75 2.62501 6.75H4.12502C4.3323 6.75 4.50004 6.91773 4.50004 7.12501C4.5 7.33229 4.33227 7.49999 4.12499 7.49999ZM15.375 7.49999H15V7.875C15 8.08228 14.8322 8.25001 14.625 8.25001C14.4177 8.25001 14.25 8.08228 14.25 7.875V7.49999H13.8749C13.6677 7.49999 13.4999 7.33226 13.4999 7.12498C13.4999 6.9177 13.6677 6.74996 13.8749 6.74996H14.25V6.37495C14.25 6.16767 14.4177 5.99994 14.625 5.99994C14.8322 5.99994 15 6.16767 15 6.37495V6.75H15.375C15.5823 6.75 15.75 6.91773 15.75 7.12501C15.75 7.33229 15.5823 7.49999 15.375 7.49999Z"
-                                    fill="#5D6C7B" />
-                              </svg>
-                              <span class="desk-list__text">
-                                 <?= $infoCardItem['accumulator'] ?> mAh
-                              </span>
-                           </li>
-                           <li class="desk-list__item">
-                              <svg class="desk-list__icon" width="18" height="18" viewBox="0 0 18 18" fill="none"
-                                 xmlns="http://www.w3.org/2000/svg">
-                                 <path
-                                    d="M14.224 0.260732C14.1407 0.101188 13.9756 0 13.7955 0H6.72992C6.51625 0 6.32795 0.141421 6.26681 0.346092L3.74286 8.80412C3.69918 8.95043 3.72721 9.10792 3.81843 9.23032C3.90965 9.35277 4.05337 9.42405 4.20596 9.42405H8.16763L6.57164 17.4212C6.52519 17.6538 6.65434 17.8862 6.87653 17.9691C6.93193 17.9898 6.98908 18 7.04544 18C7.21495 18 7.37746 17.9106 7.46554 17.7559L13.6896 6.82597C13.7748 6.67634 13.774 6.49172 13.6875 6.34287C13.601 6.19402 13.4418 6.10147 13.2697 6.10147H10.4671L14.1919 0.760267C14.2949 0.612563 14.3073 0.420397 14.224 0.260732Z"
-                                    fill="#5D6C7B" />
-                              </svg>
-                              <span class="desk-list__text">
-                                 <?= $infoCardItem['power'] ?> л.с.
-                              </span>
-                           </li>
-                           <li class="desk-list__item">
-                              <svg class="desk-list__icon" width="18" height="18" viewBox="0 0 18 18" fill="none"
-                                 xmlns="http://www.w3.org/2000/svg">
-                                 <path
-                                    d="M8.47243 4.56419V1.23584C6.43963 1.35252 4.53332 2.14245 3.01172 3.49853L5.36494 5.85175C6.25052 5.11452 7.32585 4.66895 8.47243 4.56419V4.56419Z"
-                                    fill="#5D6C7B" />
-                                 <path
-                                    d="M4.61876 6.59732L2.26557 4.24414C0.908332 5.76531 0.117422 7.67176 0 9.70505H3.32849C3.43396 8.55822 3.88044 7.48283 4.61876 6.59732Z"
-                                    fill="#5D6C7B" />
-                                 <path
-                                    d="M14.6692 9.70505H17.9977C17.8802 7.67176 17.0894 5.76531 15.7321 4.24414L13.3789 6.59732C14.1172 7.4828 14.5637 8.55822 14.6692 9.70505V9.70505Z"
-                                    fill="#5D6C7B" />
-                                 <path
-                                    d="M14.6696 10.7598C14.4951 12.6757 13.4434 13.8447 13.0258 14.2622C12.8195 14.4685 12.8195 14.803 13.0258 15.0093L14.6259 16.6094C14.729 16.7126 14.8642 16.7641 14.9994 16.7641C15.1346 16.7641 15.2697 16.7126 15.3729 16.6094C16.9523 15.0302 17.8732 12.9695 17.9992 10.7598H14.6696Z"
-                                    fill="#5D6C7B" />
-                                 <path
-                                    d="M3.27189 13.7856C3.41919 13.5541 3.64215 13.2055 3.90962 12.7931C3.63544 12.2496 3.40358 11.5721 3.32965 10.7598H0C0.126035 12.9695 1.04695 15.0302 2.62628 16.6094C2.72943 16.7126 2.8646 16.7642 2.99978 16.7642C3.13495 16.7642 3.27016 16.7126 3.37331 16.6094L3.92119 16.0615C3.76249 15.9851 3.61607 15.8819 3.48785 15.7537C2.95952 15.2253 2.87068 14.416 3.27189 13.7856V13.7856Z"
-                                    fill="#5D6C7B" />
-                                 <path
-                                    d="M9.52734 1.23584V4.56419C10.6739 4.66895 11.7493 5.11449 12.6348 5.85175L14.9881 3.49853C13.4665 2.14241 11.5601 1.35252 9.52734 1.23584V1.23584Z"
-                                    fill="#5D6C7B" />
-                                 <path
-                                    d="M7.82725 9.06949C7.01106 9.88568 4.44992 13.8968 4.16059 14.3515C4.02787 14.56 4.05783 14.8327 4.23259 15.0075C4.40735 15.1823 4.68006 15.2123 4.88861 15.0795C5.34328 14.7902 9.35448 12.2291 10.1707 11.4129C10.8167 10.7668 10.8167 9.71559 10.1707 9.06953C9.5246 8.42346 8.47332 8.42343 7.82725 9.06949V9.06949Z"
-                                    fill="#5D6C7B" />
-                              </svg>
-                              <span class="desk-list__text">
-                                 <?= $infoCardItem['speedometer'] ?> км.ч
-                              </span>
-                           </li>
-                           <li class="desk-list__item">
-                              <svg class="desk-list__icon" width="18" height="18" viewBox="0 0 18 18" fill="none"
-                                 xmlns="http://www.w3.org/2000/svg">
-                                 <g clip-path="url(#clip0_7825_20553)">
-                                    <path
-                                       d="M14.4525 5.35819L15.5303 4.28044L14.4698 3.21956L13.3168 4.3725C12.2636 3.62609 11.0345 3.16607 9.75 3.0375V1.5H11.25V0H6.75V1.5H8.25V3.0375C6.96551 3.16607 5.73644 3.62609 4.68319 4.3725L3.53025 3.21956L2.46975 4.28044L3.5475 5.35819C2.54149 6.42334 1.86948 7.75982 1.61448 9.20259C1.35947 10.6454 1.53263 12.1312 2.11257 13.4767C2.69252 14.8222 3.65384 15.9683 4.87783 16.7736C6.10182 17.5788 7.53487 18.008 9 18.008C10.4651 18.008 11.8982 17.5788 13.1222 16.7736C14.3462 15.9683 15.3075 14.8222 15.8874 13.4767C16.4674 12.1312 16.6405 10.6454 16.3855 9.20259C16.1305 7.75982 15.4585 6.42334 14.4525 5.35819V5.35819ZM9 16.5C7.81332 16.5 6.65328 16.1481 5.66658 15.4888C4.67989 14.8295 3.91085 13.8925 3.45673 12.7961C3.0026 11.6997 2.88378 10.4933 3.11529 9.32946C3.3468 8.16557 3.91825 7.09647 4.75736 6.25736C5.59648 5.41824 6.66558 4.8468 7.82946 4.61529C8.99335 4.38378 10.1997 4.5026 11.2961 4.95672C12.3925 5.41085 13.3295 6.17988 13.9888 7.16658C14.6481 8.15327 15 9.31331 15 10.5C14.9982 12.0908 14.3655 13.6158 13.2407 14.7407C12.1158 15.8655 10.5908 16.4982 9 16.5V16.5Z"
-                                       fill="#5D6C7B" />
-                                    <path
-                                       d="M9 6V10.5H4.5C4.5 11.39 4.76392 12.26 5.25839 13.0001C5.75285 13.7401 6.45566 14.3169 7.27792 14.6575C8.10019 14.9981 9.00499 15.0872 9.87791 14.9135C10.7508 14.7399 11.5526 14.3113 12.182 13.682C12.8113 13.0526 13.2399 12.2508 13.4135 11.3779C13.5872 10.505 13.4981 9.60019 13.1575 8.77792C12.8169 7.95566 12.2401 7.25285 11.5001 6.75839C10.76 6.26392 9.89002 6 9 6V6Z"
-                                       fill="#5D6C7B" />
-                                 </g>
-                                 <defs>
-                                    <clipPath id="clip0_7825_20553">
-                                       <rect width="18" height="18" fill="white" />
-                                    </clipPath>
-                                 </defs>
-                              </svg>
-                              <span class="desk-list__text">
-                                 <?= $infoCardItem['time'] ?> час(ов)
-                              </span>
-                           </li>
-                        </ul>
-                        <div class="product-card__footer">
-                           <div class="product-card__price-card price-card">
-                              <span class="price-card__old">
-                                 <?= $infoCardItem['old-price'] ?> ₽
-                              </span>
-                              <span class="price-card__numb">
-                                 <?= $infoCardItem['new-price'] ?> ₽
-                              </span>
+                        <!-- слайдер с изображениями -->
+                        <div class="slider-card__wrapper swiper-wrapper">
+                           <div class="slider-card__slide swiper-slide">
+                              <img src="/img/card/slider-card-image1.png" alt="Фото продукта">
                            </div>
-                           <div class="product-card__icons">
-                              <button type="button"
-                                 class="product-card__icon icon-card icon-card_basket icon-card_border">
-                                 <svg width="151" height="151" viewBox="0 0 151 151" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <g clip-path="url(#clip0_7827_40218)">
-                                       <path d="M21.5 59H37H117H133H143L126.5 131H24L8 59H21.5Z" fill="white" />
+                           <div class="slider-card__slide swiper-slide">
+                              <img src="/img/card/slider-card-image2.png" alt="Фото продукта">
+                           </div>
+                           <div class="slider-card__slide swiper-slide">
+                              <img src="/img/card/slider-card-image3.png" alt="Фото продукта">
+                           </div>
+                           <div class="slider-card__slide swiper-slide">
+                              <img src="/img/card/slider-card-image4.png" alt="Фото продукта">
+                           </div>
+                           <div class="slider-card__slide swiper-slide">
+                              <img src="/img/card/slider-card-image5.png" alt="Фото продукта">
+                           </div>
+                           <div class="slider-card__slide swiper-slide">
+                              <img src="/img/card/slider-card-image6.png" alt="Фото продукта">
+                           </div>
+                           <div class="slider-card__slide swiper-slide">
+                              <img src="/img/card/slider-card-image7.png" alt="Фото продукта">
+                           </div>
+                           <div class="slider-card__slide swiper-slide">
+                              <img src="/img/card/slider-card-image8.png" alt="Фото продукта">
+                           </div>
+                           <div class="slider-card__slide swiper-slide">
+                              <img src="/img/card/slider-card-image9.png" alt="Фото продукта">
+                           </div>
+                           <div class="slider-card__slide swiper-slide">
+                              <img src="/img/card/slider-card-image10.png" alt="Фото продукта">
+                           </div>
+                        </div>
+                        <!-- слайдер с изображениями -->
+
+                        <!-- слайдер с превью -->
+                        <div class="slider-card__miniatures miniatures">
+                           <div class="miniatures__wrapper swiper-wrapper">
+                              <div class="miniatures__slide swiper-slide">
+                                 <img src="/img/card/slider-card-image1.png" alt="Фото продукта">
+                              </div>
+                              <div class="miniatures__slide swiper-slide">
+                                 <img src="/img/card/slider-card-image2.png" alt="Фото продукта">
+                              </div>
+                              <div class="miniatures__slide swiper-slide">
+                                 <img src="/img/card/slider-card-image3.png" alt="Фото продукта">
+                              </div>
+                              <div class="miniatures__slide swiper-slide">
+                                 <img src="/img/card/slider-card-image4.png" alt="Фото продукта">
+                              </div>
+                              <div class="miniatures__slide swiper-slide">
+                                 <img src="/img/card/slider-card-image5.png" alt="Фото продукта">
+                              </div>
+                              <div class="miniatures__slide swiper-slide">
+                                 <img src="/img/card/slider-card-image6.png" alt="Фото продукта">
+                              </div>
+                              <div class="miniatures__slide swiper-slide">
+                                 <img src="/img/card/slider-card-image7.png" alt="Фото продукта">
+                              </div>
+                              <div class="miniatures__slide swiper-slide">
+                                 <img src="/img/card/slider-card-image8.png" alt="Фото продукта">
+                              </div>
+                              <div class="miniatures__slide swiper-slide">
+                                 <img src="/img/card/slider-card-image9.png" alt="Фото продукта">
+                              </div>
+                              <div class="miniatures__slide swiper-slide">
+                                 <img src="/img/card/slider-card-image10.png" alt="Фото продукта">
+                              </div>
+                           </div>
+                        </div>
+                        <!-- слайдер с превью -->
+
+                     </div>
+                     <div class="card__info">
+                        <div class="card__header-card header-card">
+                           <h2 class="header-card__big-title big-title">
+                              Kugoo Kirin M4
+                           </h2>
+                           <ul class="header-card__list">
+                              <li class="header-card__item">
+                                 <small class="header-card__sm">
+                                    Просмотров 350
+                                 </small>
+                              </li>
+                              <li class="header-card__item">
+                                 <small class="header-card__sm">
+                                    Купили 196 раз
+                                 </small>
+                              </li>
+                              <li class="header-card__item">
+                                 <small class="header-card__sm">
+                                    Артикул: 2200000000026
+                                 </small>
+                              </li>
+                           </ul>
+                           <ul class="header-card__list">
+                              <li class="header-card__item">
+                                 <button class="header-card__button header-card_circle-green" type="button">
+                                    В наличии
+                                 </button>
+                              </li>
+                              <li class="header-card__item">
+                                 <button class="header-card__button" type="button">
+                                    <svg class="header-card__icon" width="20" height="20" viewBox="0 0 20 20"
+                                       fill="none" xmlns="http://www.w3.org/2000/svg">
+                                       <mask id="path-1-inside-1_262_7691" fill="white">
+                                          <path
+                                             d="M19.4141 11.2638H18.7766L16.7349 6.32541C17.0208 6.2865 17.2413 6.04205 17.2413 5.74549C17.2413 5.42189 16.979 5.15955 16.6554 5.15955H11.6177C11.3769 4.49076 10.7363 4.01123 9.98559 4.01123C9.23488 4.01123 8.59422 4.4908 8.3534 5.15955H3.34465C3.02105 5.15955 2.75871 5.42189 2.75871 5.74549C2.75871 6.04205 2.97926 6.2865 3.26512 6.32541L1.22344 11.2638H0.585938C0.262344 11.2638 0 11.5262 0 11.8497C0 14.1319 1.85668 15.9886 4.13883 15.9886C6.42098 15.9886 8.27766 14.1319 8.27766 11.8497C8.27766 11.5262 8.01531 11.2638 7.69172 11.2638H7.05418L5.01504 6.33143H8.3534C8.59422 7.00022 9.23484 7.47975 9.98559 7.47975C10.7363 7.47975 11.3769 7.00022 11.6177 6.33143H14.985L12.9459 11.2638H12.3083C11.9847 11.2638 11.7224 11.5262 11.7224 11.8497C11.7224 14.1319 13.5791 15.9886 15.8612 15.9886C18.1434 15.9886 20 14.1319 20 11.8497C20 11.5262 19.7377 11.2638 19.4141 11.2638ZM4.13883 14.8167C2.70332 14.8167 1.5027 13.7921 1.22996 12.4357H7.0477C6.77496 13.7921 5.57434 14.8167 4.13883 14.8167ZM5.78613 11.2638H2.49152L4.13883 7.27928L5.78613 11.2638ZM9.98555 6.30787C9.67543 6.30787 9.42316 6.05561 9.42316 5.74549C9.42316 5.43537 9.67543 5.18311 9.98555 5.18311C10.2956 5.18311 10.5479 5.43537 10.5479 5.74549C10.5479 6.05561 10.2957 6.30787 9.98555 6.30787ZM15.8612 7.27928L17.5085 11.2638H14.2139L15.8612 7.27928ZM15.8612 14.8167C14.4257 14.8167 13.225 13.7921 12.9523 12.4357H18.77C18.4973 13.7921 17.2966 14.8167 15.8612 14.8167Z" />
+                                       </mask>
                                        <path
-                                          d="M148.758 54.5798C146.764 52.0783 143.773 50.6432 140.551 50.6432H111.47L95.701 14.5351C94.7233 12.2963 92.1156 11.2732 89.8766 12.2515C87.6375 13.2291 86.615 15.8371 87.593 18.0762L101.816 50.6435H49.1844L63.407 18.0762C64.3847 15.8371 63.3625 13.2294 61.1235 12.2515C58.8847 11.2732 56.2767 12.2957 55.299 14.5351L39.5299 50.6435H10.4494C7.22708 50.6435 4.23569 52.0783 2.24172 54.5801C0.284323 57.0362 -0.43794 60.1937 0.26014 63.2438L15.7898 131.076C16.8743 135.812 21.0642 139.12 25.9791 139.12H125.021C129.936 139.12 134.126 135.812 135.21 131.076L150.74 63.2435C151.438 60.1934 150.716 57.0359 148.758 54.5798ZM125.021 130.272H25.9791C25.2279 130.272 24.57 129.78 24.4145 129.101L8.88484 61.2692C8.76303 60.7369 8.96741 60.3364 9.16088 60.0943C9.34019 59.869 9.7463 59.4912 10.4494 59.4912H35.6661L34.5074 62.1446C33.5297 64.3836 34.5519 66.9913 36.7909 67.9693C37.3672 68.2211 37.9677 68.3403 38.559 68.3403C40.2642 68.3403 41.8892 67.3485 42.6153 65.686L45.3207 59.4918H105.68L108.385 65.686C109.111 67.3488 110.736 68.3403 112.442 68.3403C113.033 68.3403 113.633 68.2211 114.21 67.9693C116.449 66.9916 117.471 64.3836 116.493 62.1446L115.335 59.4912H140.551C141.254 59.4912 141.66 59.869 141.84 60.0943C142.033 60.3367 142.238 60.7372 142.116 61.269L126.586 129.101C126.43 129.78 125.772 130.272 125.021 130.272Z"
+                                          d="M19.4141 11.2638H18.7766L16.7349 6.32541C17.0208 6.2865 17.2413 6.04205 17.2413 5.74549C17.2413 5.42189 16.979 5.15955 16.6554 5.15955H11.6177C11.3769 4.49076 10.7363 4.01123 9.98559 4.01123C9.23488 4.01123 8.59422 4.4908 8.3534 5.15955H3.34465C3.02105 5.15955 2.75871 5.42189 2.75871 5.74549C2.75871 6.04205 2.97926 6.2865 3.26512 6.32541L1.22344 11.2638H0.585938C0.262344 11.2638 0 11.5262 0 11.8497C0 14.1319 1.85668 15.9886 4.13883 15.9886C6.42098 15.9886 8.27766 14.1319 8.27766 11.8497C8.27766 11.5262 8.01531 11.2638 7.69172 11.2638H7.05418L5.01504 6.33143H8.3534C8.59422 7.00022 9.23484 7.47975 9.98559 7.47975C10.7363 7.47975 11.3769 7.00022 11.6177 6.33143H14.985L12.9459 11.2638H12.3083C11.9847 11.2638 11.7224 11.5262 11.7224 11.8497C11.7224 14.1319 13.5791 15.9886 15.8612 15.9886C18.1434 15.9886 20 14.1319 20 11.8497C20 11.5262 19.7377 11.2638 19.4141 11.2638ZM4.13883 14.8167C2.70332 14.8167 1.5027 13.7921 1.22996 12.4357H7.0477C6.77496 13.7921 5.57434 14.8167 4.13883 14.8167ZM5.78613 11.2638H2.49152L4.13883 7.27928L5.78613 11.2638ZM9.98555 6.30787C9.67543 6.30787 9.42316 6.05561 9.42316 5.74549C9.42316 5.43537 9.67543 5.18311 9.98555 5.18311C10.2956 5.18311 10.5479 5.43537 10.5479 5.74549C10.5479 6.05561 10.2957 6.30787 9.98555 6.30787ZM15.8612 7.27928L17.5085 11.2638H14.2139L15.8612 7.27928ZM15.8612 14.8167C14.4257 14.8167 13.225 13.7921 12.9523 12.4357H18.77C18.4973 13.7921 17.2966 14.8167 15.8612 14.8167Z"
+                                          fill="#282739" />
+                                       <path
+                                          d="M18.7766 11.2638L15.08 12.792L16.1019 15.2638H18.7766V11.2638ZM16.7349 6.32541L16.1956 2.36194L11.0571 3.06121L13.0384 7.85364L16.7349 6.32541ZM11.6177 5.15955L7.85429 6.51471L8.80665 9.15955H11.6177V5.15955ZM8.3534 5.15955V9.15955H11.1644L12.1168 6.51478L8.3534 5.15955ZM3.26512 6.32541L6.96166 7.85367L8.94296 3.0613L3.80455 2.36195L3.26512 6.32541ZM1.22344 11.2638V15.2638H3.89809L4.91998 12.7921L1.22344 11.2638ZM7.05418 11.2638L3.35762 12.792L4.3795 15.2638H7.05418V11.2638ZM5.01504 6.33143V2.33143H-0.966991L1.31848 7.85965L5.01504 6.33143ZM8.3534 6.33143L12.1168 4.97627L11.1645 2.33143H8.3534V6.33143ZM11.6177 6.33143V2.33143H8.80665L7.85429 4.97627L11.6177 6.33143ZM14.985 6.33143L18.6816 7.85965L20.967 2.33143H14.985V6.33143ZM12.9459 11.2638V15.2638H15.6205L16.6424 12.792L12.9459 11.2638ZM1.22996 12.4357V8.43568H-3.65441L-2.69155 13.2242L1.22996 12.4357ZM7.0477 12.4357L10.9692 13.2242L11.9321 8.43568H7.0477V12.4357ZM5.78613 11.2638V15.2638H11.7682L9.48268 9.73556L5.78613 11.2638ZM2.49152 11.2638L-1.20502 9.73556L-3.49054 15.2638H2.49152V11.2638ZM4.13883 7.27928L7.83538 5.75103L4.13883 -3.19025L0.44228 5.75103L4.13883 7.27928ZM15.8612 7.27928L19.5577 5.75103L15.8612 -3.19025L12.1646 5.75103L15.8612 7.27928ZM17.5085 11.2638V15.2638H23.4905L21.205 9.73556L17.5085 11.2638ZM14.2139 11.2638L10.5173 9.73556L8.2318 15.2638H14.2139V11.2638ZM12.9523 12.4357V8.43568H8.06793L9.0308 13.2242L12.9523 12.4357ZM18.77 12.4357L22.6915 13.2242L23.6544 8.43568H18.77V12.4357ZM19.4141 7.26381H18.7766V15.2638H19.4141V7.26381ZM22.4731 9.73557L20.4315 4.79718L13.0384 7.85364L15.08 12.792L22.4731 9.73557ZM17.2743 10.2889C19.5083 9.98487 21.2413 8.07722 21.2413 5.74549H13.2413C13.2413 4.00688 14.5334 2.58814 16.1956 2.36194L17.2743 10.2889ZM21.2413 5.74549C21.2413 3.21276 19.1881 1.15955 16.6554 1.15955V9.15955C14.7698 9.15955 13.2413 7.63103 13.2413 5.74549H21.2413ZM16.6554 1.15955H11.6177V9.15955H16.6554V1.15955ZM15.3812 3.80439C14.5889 1.60401 12.4809 0.0112305 9.98559 0.0112305V8.01123C8.99163 8.01123 8.16497 7.37751 7.85429 6.51471L15.3812 3.80439ZM9.98559 0.0112305C7.49022 0.0112305 5.38231 1.60405 4.58997 3.80432L12.1168 6.51478C11.8061 7.37756 10.9795 8.01123 9.98559 8.01123V0.0112305ZM8.3534 1.15955H3.34465V9.15955H8.3534V1.15955ZM3.34465 1.15955C0.811916 1.15955 -1.24129 3.21276 -1.24129 5.74549H6.75871C6.75871 7.63103 5.23019 9.15955 3.34465 9.15955V1.15955ZM-1.24129 5.74549C-1.24129 8.07746 0.492035 9.98486 2.72568 10.2889L3.80455 2.36195C5.46648 2.58814 6.75871 4.00664 6.75871 5.74549H-1.24129ZM-0.431425 4.79715L-2.4731 9.73555L4.91998 12.7921L6.96166 7.85367L-0.431425 4.79715ZM1.22344 7.26381H0.585938V15.2638H1.22344V7.26381ZM0.585938 7.26381C-1.9468 7.26381 -4 9.31701 -4 11.8497H4C4 13.7353 2.47148 15.2638 0.585938 15.2638V7.26381ZM-4 11.8497C-4 16.341 -0.352459 19.9886 4.13883 19.9886V11.9886C4.11514 11.9886 4.10112 11.9845 4.08983 11.9798C4.07582 11.9738 4.05865 11.9632 4.04204 11.9465C4.02542 11.9299 4.01476 11.9128 4.00882 11.8987C4.00404 11.8875 4 11.8734 4 11.8497H-4ZM4.13883 19.9886C8.63012 19.9886 12.2777 16.341 12.2777 11.8497H4.27766C4.27766 11.8734 4.27362 11.8875 4.26883 11.8987C4.2629 11.9128 4.25223 11.9299 4.23562 11.9465C4.21901 11.9632 4.20183 11.9738 4.18783 11.9798C4.17654 11.9845 4.16251 11.9886 4.13883 11.9886V19.9886ZM12.2777 11.8497C12.2777 9.31701 10.2245 7.26381 7.69172 7.26381V15.2638C5.80617 15.2638 4.27766 13.7353 4.27766 11.8497H12.2777ZM7.69172 7.26381H7.05418V15.2638H7.69172V7.26381ZM10.7507 9.73558L8.71159 4.8032L1.31848 7.85965L3.35762 12.792L10.7507 9.73558ZM5.01504 10.3314H8.3534V2.33143H5.01504V10.3314ZM4.58995 7.68658C5.38229 9.88702 7.49024 11.4797 9.98559 11.4797V3.47975C10.9795 3.47975 11.8061 4.11341 12.1168 4.97627L4.58995 7.68658ZM9.98559 11.4797C12.4809 11.4797 14.5889 9.88696 15.3812 7.68658L7.85429 4.97627C8.16497 4.11347 8.99163 3.47975 9.98559 3.47975V11.4797ZM11.6177 10.3314H14.985V2.33143H11.6177V10.3314ZM11.2884 4.8032L9.2493 9.73558L16.6424 12.792L18.6816 7.85965L11.2884 4.8032ZM12.9459 7.26381H12.3083V15.2638H12.9459V7.26381ZM12.3083 7.26381C9.77559 7.26381 7.72238 9.31701 7.72238 11.8497H15.7224C15.7224 13.7353 14.1939 15.2638 12.3083 15.2638V7.26381ZM7.72238 11.8497C7.72238 16.341 11.3699 19.9886 15.8612 19.9886V11.9886C15.8375 11.9886 15.8235 11.9845 15.8122 11.9798C15.7982 11.9738 15.781 11.9632 15.7644 11.9465C15.7478 11.9299 15.7371 11.9128 15.7312 11.8987C15.7264 11.8875 15.7224 11.8734 15.7224 11.8497H7.72238ZM15.8612 19.9886C20.3525 19.9886 24 16.341 24 11.8497H16C16 11.8734 15.996 11.8875 15.9912 11.8988C15.9852 11.9128 15.9746 11.9299 15.958 11.9466C15.9414 11.9632 15.9242 11.9738 15.9102 11.9798C15.8989 11.9845 15.8849 11.9886 15.8612 11.9886V19.9886ZM24 11.8497C24 9.31701 21.9468 7.26381 19.4141 7.26381V15.2638C17.5285 15.2638 16 13.7353 16 11.8497H24ZM4.13883 10.8167C4.64856 10.8167 5.05659 11.1753 5.15147 11.6472L-2.69155 13.2242C-2.0512 16.4088 0.758084 18.8167 4.13883 18.8167V10.8167ZM1.22996 16.4357H7.0477V8.43568H1.22996V16.4357ZM3.12619 11.6472C3.22107 11.1753 3.6291 10.8167 4.13883 10.8167V18.8167C7.51957 18.8167 10.3289 16.4088 10.9692 13.2242L3.12619 11.6472ZM5.78613 7.26381H2.49152V15.2638H5.78613V7.26381ZM6.18807 12.7921L7.83538 8.80752L0.44228 5.75103L-1.20502 9.73556L6.18807 12.7921ZM0.44228 8.80752L2.08958 12.7921L9.48268 9.73556L7.83538 5.75103L0.44228 8.80752ZM9.98555 2.30787C11.8846 2.30787 13.4232 3.84646 13.4232 5.74549H5.42316C5.42316 8.26475 7.46629 10.3079 9.98555 10.3079V2.30787ZM13.4232 5.74549C13.4232 7.64451 11.8846 9.18311 9.98555 9.18311V1.18311C7.46629 1.18311 5.42316 3.22623 5.42316 5.74549H13.4232ZM9.98555 9.18311C8.08667 9.18311 6.54793 7.64469 6.54793 5.74549H14.5479C14.5479 3.22605 12.5046 1.18311 9.98555 1.18311V9.18311ZM6.54793 5.74549C6.54793 3.84646 8.08653 2.30787 9.98555 2.30787V10.3079C12.5048 10.3079 14.5479 8.26475 14.5479 5.74549H6.54793ZM12.1646 8.80752L13.8119 12.7921L21.205 9.73556L19.5577 5.75103L12.1646 8.80752ZM17.5085 7.26381H14.2139V15.2638H17.5085V7.26381ZM17.9104 12.7921L19.5577 8.80752L12.1646 5.75103L10.5173 9.73556L17.9104 12.7921ZM15.8612 10.8167C16.3709 10.8167 16.7789 11.1753 16.8738 11.6472L9.0308 13.2242C9.67114 16.4088 12.4804 18.8167 15.8612 18.8167V10.8167ZM12.9523 16.4357H18.77V8.43568H12.9523V16.4357ZM14.8485 11.6472C14.9434 11.1753 15.3514 10.8167 15.8612 10.8167V18.8167C19.2418 18.8167 22.0512 16.4088 22.6915 13.2242L14.8485 11.6472Z"
+                                          fill="#282739" mask="url(#path-1-inside-1_262_7691)" />
+                                    </svg>
+                                    Сравнить
+                                 </button>
+                              </li>
+                              <li class="header-card__item">
+                                 <button class="header-card__button" type="button">
+                                    <svg class="header-card__icon" width="20" height="20" viewBox="0 0 20 20"
+                                       fill="none" xmlns="http://www.w3.org/2000/svg">
+                                       <g clip-path="url(#clip0_262_7706)">
+                                          <path
+                                             d="M15.4228 13.4529C14.4645 13.4529 13.6012 13.8667 13.002 14.525L7.61244 11.187C7.75633 10.8186 7.83614 10.4185 7.83614 9.99998C7.83614 9.58128 7.75633 9.1812 7.61244 8.813L13.002 5.47484C13.6012 6.13311 14.4645 6.54708 15.4228 6.54708C17.2279 6.54708 18.6964 5.07857 18.6964 3.27346C18.6964 1.46835 17.2279 0 15.4228 0C13.6177 0 12.1492 1.4685 12.1492 3.27361C12.1492 3.69216 12.2291 4.09225 12.3729 4.46059L6.98348 7.7986C6.38427 7.14034 5.52093 6.72637 4.56268 6.72637C2.75757 6.72637 1.28906 8.19502 1.28906 9.99998C1.28906 11.8051 2.75757 13.2736 4.56268 13.2736C5.52093 13.2736 6.38427 12.8598 6.98348 12.2014L12.3729 15.5394C12.2291 15.9077 12.1492 16.3078 12.1492 16.7265C12.1492 18.5315 13.6177 20 15.4228 20C17.2279 20 18.6964 18.5315 18.6964 16.7265C18.6964 14.9214 17.2279 13.4529 15.4228 13.4529ZM13.3429 3.27361C13.3429 2.12677 14.2759 1.19369 15.4228 1.19369C16.5696 1.19369 17.5027 2.12677 17.5027 3.27361C17.5027 4.42046 16.5696 5.35354 15.4228 5.35354C14.2759 5.35354 13.3429 4.42046 13.3429 3.27361ZM4.56268 12.0799C3.41568 12.0799 2.4826 11.1468 2.4826 9.99998C2.4826 8.85313 3.41568 7.92006 4.56268 7.92006C5.70952 7.92006 6.64245 8.85313 6.64245 9.99998C6.64245 11.1468 5.70952 12.0799 4.56268 12.0799ZM13.3429 16.7263C13.3429 15.5795 14.2759 14.6464 15.4228 14.6464C16.5696 14.6464 17.5027 15.5795 17.5027 16.7263C17.5027 17.8732 16.5696 18.8063 15.4228 18.8063C14.2759 18.8063 13.3429 17.8732 13.3429 16.7263Z"
+                                             fill="#282739" />
+                                       </g>
+                                       <defs>
+                                          <clipPath id="clip0_262_7706">
+                                             <rect width="20" height="20" fill="white" />
+                                          </clipPath>
+                                       </defs>
+                                    </svg>
+                                    Поделиться
+                                 </button>
+                              </li>
+                           </ul>
+                           <div class="header-card__payment payment">
+                              <div class="payment__price">
+                                 <span class="payment__old-price">
+                                    39 900 ₽
+                                 </span>
+                                 <span class="payment__new-price">
+                                    29 900 ₽
+                                 </span>
+                              </div>
+                              <div class="payment__installment-plan">
+                                 <div class="payment__icon">
+                                    <img src="/img/card/card-icon.png" alt="Карта">
+                                 </div>
+                                 <div class="payment__info">
+                                    <p class="payment__subtitle">
+                                       Рассрочка:
+                                    </p>
+                                    <p class="payment__text">
+                                       1 760 ₽ в месяц / 24 месяца
+                                    </p>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <ul class="card__advantages-card advantages-card">
+                           <li class="advantages-card__item">
+                              <p class="advantages-card__header">
+                                 Комплектация
+                                 <svg class="advantages-card__icon" width="16" height="16" viewBox="0 0 16 16"
+                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                       d="M8 1C4.13438 1 1 4.13438 1 8C1 11.8656 4.13438 15 8 15C11.8656 15 15 11.8656 15 8C15 4.13438 11.8656 1 8 1ZM8 13.8125C4.79063 13.8125 2.1875 11.2094 2.1875 8C2.1875 4.79063 4.79063 2.1875 8 2.1875C11.2094 2.1875 13.8125 4.79063 13.8125 8C13.8125 11.2094 11.2094 13.8125 8 13.8125Z"
+                                       fill="#282739" />
+                                    <path
+                                       d="M9.74375 4.94844C9.275 4.5375 8.65625 4.3125 8 4.3125C7.34375 4.3125 6.725 4.53906 6.25625 4.94844C5.76875 5.375 5.5 5.94844 5.5 6.5625V6.68125C5.5 6.75 5.55625 6.80625 5.625 6.80625H6.375C6.44375 6.80625 6.5 6.75 6.5 6.68125V6.5625C6.5 5.87344 7.17344 5.3125 8 5.3125C8.82656 5.3125 9.5 5.87344 9.5 6.5625C9.5 7.04844 9.15625 7.49375 8.62344 7.69844C8.29219 7.825 8.01094 8.04687 7.80937 8.3375C7.60469 8.63437 7.49844 8.99062 7.49844 9.35156V9.6875C7.49844 9.75625 7.55469 9.8125 7.62344 9.8125H8.37344C8.44219 9.8125 8.49844 9.75625 8.49844 9.6875V9.33281C8.49925 9.18113 8.54574 9.03321 8.63187 8.90834C8.71799 8.78347 8.83975 8.68746 8.98125 8.63281C9.90312 8.27813 10.4984 7.46563 10.4984 6.5625C10.5 5.94844 10.2312 5.375 9.74375 4.94844ZM7.375 11.4375C7.375 11.6033 7.44085 11.7622 7.55806 11.8794C7.67527 11.9967 7.83424 12.0625 8 12.0625C8.16576 12.0625 8.32473 11.9967 8.44194 11.8794C8.55915 11.7622 8.625 11.6033 8.625 11.4375C8.625 11.2717 8.55915 11.1128 8.44194 10.9956C8.32473 10.8783 8.16576 10.8125 8 10.8125C7.83424 10.8125 7.67527 10.8783 7.55806 10.9956C7.44085 11.1128 7.375 11.2717 7.375 11.4375Z"
+                                       fill="#282739" />
+                                 </svg>
+                              </p>
+                              <div class="advantages-card__row">
+                                 <button class="advantages-card__button advantages-card__button_active">
+                                    <p class="advantages-card__subtitle">
+                                       Базовая
+                                    </p>
+                                 </button>
+                                 <button class="advantages-card__button">
+                                    <p class="advantages-card__subtitle">
+                                       Версия MAX
+                                    </p>
+                                 </button>
+                                 <button class="advantages-card__button">
+                                    <p class="advantages-card__subtitle">
+                                       VIP-версия
+                                    </p>
+                                 </button>
+                              </div>
+                           </li>
+                           <li class="advantages-card__tires-advantages tires-advantages">
+                              <div class="tires-advantages__info">
+                                 <small class="tires-advantages__sm">
+                                    Покрышки
+                                 </small>
+                                 <p class="tires-advantages__title">
+                                    Внедорожная шипованная
+                                 </p>
+                                 <p class="tires-advantages__text">
+                                    + установка (с доп.комплектом базовых покрышек)
+                                 </p>
+                                 <p class="tires-advantages__price">
+                                    7600 руб.
+                                 </p>
+                              </div>
+                              <button class="tires-advantages__button" type="button" aria-label="Изменить">
+                                 Изменить
+                              </button>
+                           </li>
+                           <li class="advantages-card__item">
+                              <p class="advantages-card__header">
+                                 Комплектация
+                              </p>
+                              <div class="advantages-card__row">
+                                 <button class="advantages-card__button">
+                                    <p class="advantages-card__subtitle">
+                                       Стандартная 1 год
+                                    </p>
+                                    <p class="advantages-card__price">
+                                       Бесплатно
+                                    </p>
+                                 </button>
+                                 <button class="advantages-card__button advantages-card__button_active">
+                                    <p class="advantages-card__subtitle">
+                                       Расширенная 2 года
+                                    </p>
+                                    <p class="advantages-card__price">
+                                       2 990 руб.
+                                    </p>
+                                 </button>
+                              </div>
+                           </li>
+                           <li class="advantages-card__item">
+                              <p class="advantages-card__header">
+                                 Комплектация
+                              </p>
+                              <div class="advantages-card__row">
+                                 <button class="advantages-card__button">
+                                    <p class="advantages-card__subtitle">
+                                       Нет
+                                    </p>
+                                 </button>
+                                 <button class="advantages-card__button advantages-card__button_active">
+                                    <p class="advantages-card__subtitle">
+                                       Настройка
+                                    </p>
+                                    <p class="advantages-card__price">
+                                       1 520 руб.
+                                    </p>
+                                 </button>
+                                 <button class="advantages-card__button">
+                                    <p class="advantages-card__subtitle">
+                                       Гидроизоляция
+                                    </p>
+                                    <p class="advantages-card__price">
+                                       3 850 руб.
+                                    </p>
+                                 </button>
+                                 <button class="advantages-card__button">
+                                    <p class="advantages-card__subtitle">
+                                       Гидроизоляция <br> и настройка
+                                    </p>
+                                    <p class="advantages-card__price">
+                                       3 409 руб. (-30%)
+                                    </p>
+                                 </button>
+                              </div>
+                           </li>
+                           <li class="advantages-card__gift-advantages gift-advantages">
+                              <div class="gift-advantages__header">
+                                 <p class="gift-advantages__title">
+                                    Подарочная упаковка
+                                 </p>
+                                 <p class="gift-advantages__stock">
+                                    До конца акции <time class="gift-advantages__time"
+                                       datetime="06:34:23:02">06:34:23:02</time>
+                                 </p>
+                              </div>
+                              <div class="gift-advantages__content">
+                                 <article class="gift-advantages__block-gift">
+                                    <p class="block-gift__title">
+                                       2 подарка при покупке
+                                    </p>
+                                    <ul class="block-gift__row">
+                                       <li class="block-gift__item">
+                                          <div class="block-gift__icon">
+                                             <img src="/img/card/card-icon-gift1.svg"
+                                                alt="Книга «6 вопросов об электротранспорте, на которые вы должны знать ответ».">
+                                          </div>
+                                          <p class="block-gift__text">
+                                             Книга «6 вопросов об электротранспорте, на которые вы должны знать ответ».
+                                          </p>
+                                       </li>
+                                       <li class="block-gift__item">
+                                          <div class="block-gift__icon">
+                                             <img src="/img/card/card-icon-gift2.svg"
+                                                alt="Универсальный держатель для телефона ">
+                                          </div>
+                                          <p class="block-gift__text">
+                                             Универсальный держатель для телефона
+                                          </p>
+                                       </li>
+                                    </ul>
+                                 </article>
+                                 <div class="gift-advantages__row">
+                                    <button class="gift-advantages__button" type="button">
+                                       Без упаковки
+                                    </button>
+                                    <button class="gift-advantages__button gift-advantages__button_circle-pink"
+                                       type="button">
+                                       Розовый
+                                    </button>
+                                    <button class="gift-advantages__button gift-advantages__button_circle-blue"
+                                       type="button">
+                                       Синий
+                                    </button>
+                                    <button class="gift-advantages__button gift-advantages__button_circle-red"
+                                       type="button">
+                                       Красный
+                                    </button>
+                                 </div>
+                              </div>
+                           </li>
+                           <li class="advantages-card__payment-advantages payment-advantages">
+                              <div class="payment-advantages__header">
+                                 <span class="payment-advantages__price big-title">
+                                    45 900 руб.
+                                 </span>
+                                 <button type="button" class="product-card__icon-card icon-card icon-card_border">
+                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                       xmlns="http://www.w3.org/2000/svg">
+                                       <path
+                                          d="M17.9951 5.51484C17.7344 4.90528 17.3586 4.35291 16.8886 3.88864C16.4182 3.42298 15.8637 3.05293 15.2551 2.79861C14.624 2.53385 13.9471 2.39833 13.2637 2.39992C12.305 2.39992 11.3696 2.66506 10.5568 3.16588C10.3623 3.28569 10.1775 3.41727 10.0025 3.56065C9.8275 3.41727 9.64276 3.28569 9.44829 3.16588C8.63542 2.66506 7.70004 2.39992 6.74132 2.39992C6.05096 2.39992 5.382 2.53347 4.74998 2.79861C4.13935 3.05393 3.58901 3.4212 3.11646 3.88864C2.64584 4.35239 2.2699 4.90489 2.00994 5.51484C1.73963 6.14922 1.60156 6.82287 1.60156 7.51617C1.60156 8.17019 1.7338 8.8517 1.99633 9.54499C2.21608 10.1244 2.53111 10.7254 2.93366 11.3322C3.57151 12.2926 4.44855 13.2943 5.53757 14.3097C7.34222 15.9929 9.12937 17.1555 9.20521 17.2027L9.6661 17.5012C9.87029 17.6328 10.1328 17.6328 10.337 17.5012L10.7979 17.2027C10.8737 17.1536 12.6589 15.9929 14.4655 14.3097C15.5545 13.2943 16.4316 12.2926 17.0694 11.3322C17.472 10.7254 17.789 10.1244 18.0068 9.54499C18.2693 8.8517 18.4015 8.17019 18.4015 7.51617C18.4035 6.82287 18.2654 6.14922 17.9951 5.51484ZM10.0025 15.9477C10.0025 15.9477 3.07951 11.4678 3.07951 7.51617C3.07951 5.51484 4.71886 3.89257 6.74132 3.89257C8.16287 3.89257 9.39579 4.69388 10.0025 5.86443C10.6093 4.69388 11.8422 3.89257 13.2637 3.89257C15.2862 3.89257 16.9255 5.51484 16.9255 7.51617C16.9255 11.4678 10.0025 15.9477 10.0025 15.9477Z"
                                           fill="#6F73EE" />
                                        <path
-                                          d="M148.758 54.5798C146.764 52.0783 143.773 50.6432 140.551 50.6432H111.47L95.701 14.5351C94.7233 12.2963 92.1156 11.2732 89.8766 12.2515C87.6375 13.2291 86.615 15.8371 87.593 18.0762L101.816 50.6435H49.1844L63.407 18.0762C64.3847 15.8371 63.3625 13.2294 61.1235 12.2515C58.8847 11.2732 56.2767 12.2957 55.299 14.5351L39.5299 50.6435H10.4494C7.22708 50.6435 4.23569 52.0783 2.24172 54.5801C0.284323 57.0362 -0.43794 60.1937 0.26014 63.2438L15.7898 131.076C16.8743 135.812 21.0642 139.12 25.9791 139.12H125.021C129.936 139.12 134.126 135.812 135.21 131.076L150.74 63.2435C151.438 60.1934 150.716 57.0359 148.758 54.5798ZM125.021 130.272H25.9791C25.2279 130.272 24.57 129.78 24.4145 129.101L8.88484 61.2692C8.76303 60.7369 8.96741 60.3364 9.16088 60.0943C9.34019 59.869 9.7463 59.4912 10.4494 59.4912H35.6661L34.5074 62.1446C33.5297 64.3836 34.5519 66.9913 36.7909 67.9693C37.3672 68.2211 37.9677 68.3403 38.559 68.3403C40.2642 68.3403 41.8892 67.3485 42.6153 65.686L45.3207 59.4918H105.68L108.385 65.686C109.111 67.3488 110.736 68.3403 112.442 68.3403C113.033 68.3403 113.633 68.2211 114.21 67.9693C116.449 66.9916 117.471 64.3836 116.493 62.1446L115.335 59.4912H140.551C141.254 59.4912 141.66 59.869 141.84 60.0943C142.033 60.3367 142.238 60.7372 142.116 61.269L126.586 129.101C126.43 129.78 125.772 130.272 125.021 130.272Z"
-                                          stroke="#6F73EE" />
-                                       <path class="white"
-                                          d="M48.9551 78.6621C46.5119 78.6621 44.5312 80.6428 44.5312 83.0859V115.527C44.5312 117.97 46.5119 119.951 48.9551 119.951C51.3982 119.951 53.3789 117.97 53.3789 115.527V83.0859C53.3789 80.6428 51.3985 78.6621 48.9551 78.6621Z"
-                                          fill="#6F73EE" />
-                                       <path class="white"
-                                          d="M48.9551 78.6621C46.5119 78.6621 44.5312 80.6428 44.5312 83.0859V115.527C44.5312 117.97 46.5119 119.951 48.9551 119.951C51.3982 119.951 53.3789 117.97 53.3789 115.527V83.0859C53.3789 80.6428 51.3985 78.6621 48.9551 78.6621Z"
-                                          stroke="#6F73EE" />
-                                       <path class="white"
-                                          d="M75.502 78.6621C73.0588 78.6621 71.0781 80.6428 71.0781 83.0859V115.527C71.0781 117.97 73.0588 119.951 75.502 119.951C77.9451 119.951 79.9258 117.97 79.9258 115.527V83.0859C79.9258 80.6428 77.9451 78.6621 75.502 78.6621Z"
-                                          fill="#6F73EE" />
-                                       <path class="white"
-                                          d="M75.502 78.6621C73.0588 78.6621 71.0781 80.6428 71.0781 83.0859V115.527C71.0781 117.97 73.0588 119.951 75.502 119.951C77.9451 119.951 79.9258 117.97 79.9258 115.527V83.0859C79.9258 80.6428 77.9451 78.6621 75.502 78.6621Z"
-                                          stroke="#6F73EE" />
-                                       <path class="white"
-                                          d="M102.041 78.6621C99.5979 78.6621 97.6172 80.6428 97.6172 83.0859V115.527C97.6172 117.97 99.5979 119.951 102.041 119.951C104.484 119.951 106.465 117.97 106.465 115.527V83.0859C106.465 80.6428 104.484 78.6621 102.041 78.6621Z"
-                                          fill="#6F73EE" />
-                                       <path class="white"
-                                          d="M102.041 78.6621C99.5979 78.6621 97.6172 80.6428 97.6172 83.0859V115.527C97.6172 117.97 99.5979 119.951 102.041 119.951C104.484 119.951 106.465 117.97 106.465 115.527V83.0859C106.465 80.6428 104.484 78.6621 102.041 78.6621Z"
-                                          stroke="#6F73EE" />
+                                          d="M3.99986 4.00041C6.0995 2.60065 8.35221 3.39493 9.55275 4.17364C9.8961 4.02094 10.6335 3.80368 12 3.5C16.5 2.5 16.5 5 17.5 6.5C18.3 7.7 17.1667 10 16.5 11L9.99986 17L2.99986 10.5C2.3332 9.00014 1.59986 5.60041 3.99986 4.00041Z" />
+                                    </svg>
+                                 </button>
+                              </div>
+                              <div class="payment-advantages__info">
+                                 <svg class="payment-advantages__icon" width="22" height="22" viewBox="0 0 22 22"
+                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <g clip-path="url(#clip0_257_9248)">
+                                       <path
+                                          d="M20.7292 9.8822H20.2305L19.4223 6.50151C19.3089 6.0114 18.879 5.66924 18.3751 5.66924H15.0894V5.02441C15.0894 4.19473 14.4145 3.51978 13.5848 3.51978H1.50464C0.674953 3.51973 0 4.19469 0 5.02437V15.041C0 15.8702 0.674953 16.5456 1.50464 16.5456H2.73629C3.02345 17.6569 4.03459 18.4802 5.23398 18.4802C6.43341 18.4802 7.44451 17.6569 7.73167 16.5456H14.6122C14.8993 17.6569 15.9105 18.4802 17.1099 18.4802C18.3092 18.4802 19.3204 17.6569 19.6075 16.5456H20.4953C21.325 16.5456 21.9999 15.8707 21.9999 15.041V11.153C22 10.4523 21.43 9.8822 20.7292 9.8822ZM18.2053 6.95891L18.9043 9.8822H15.0894V6.95891H18.2053ZM1.28971 15.041V13.1546H2.66002C3.01615 13.1546 3.30486 12.8659 3.30486 12.5098C3.30486 12.1537 3.01615 11.865 2.66002 11.865H1.28971V5.02437C1.28971 4.90573 1.386 4.80944 1.50464 4.80944H13.5847C13.7034 4.80944 13.7997 4.90573 13.7997 5.02437V15.2559H7.73171C7.44455 14.1446 6.43341 13.3214 5.23402 13.3214C4.03459 13.3214 3.0235 14.1446 2.73634 15.2559H1.50464C1.386 15.2559 1.28971 15.1592 1.28971 15.041ZM5.23398 17.1905C4.5228 17.1905 3.94427 16.6112 3.94427 15.9007C3.94427 14.5858 5.69254 14.1201 6.35039 15.2559C6.58023 15.6503 6.58281 16.1452 6.35039 16.5456C6.12691 16.9308 5.71033 17.1905 5.23398 17.1905ZM17.1099 17.1905C16.1174 17.1905 15.4982 16.109 15.9934 15.2559C16.6538 14.1158 18.3996 14.589 18.3996 15.9007C18.3996 16.6083 17.8235 17.1905 17.1099 17.1905ZM20.7103 15.041C20.7103 15.1596 20.614 15.2559 20.4954 15.2559H19.6076C19.3205 14.1446 18.3093 13.3214 17.1099 13.3214C16.2927 13.3214 15.5627 13.7035 15.0894 14.299V11.1719H20.7103V15.041H20.7103Z"
+                                          fill="#282739" />
+                                       <path
+                                          d="M6.21079 11.8087C6.45107 12.0834 6.87131 12.1042 7.13746 11.8544L10.0178 9.15118C10.2774 8.90746 10.2904 8.49939 10.0467 8.23969C9.80302 7.98003 9.39495 7.96705 9.1352 8.21077L6.74184 10.4569L5.99934 9.60803C5.76486 9.33994 5.35748 9.31274 5.08944 9.54718C4.8214 9.78166 4.79416 10.189 5.02859 10.4571L6.21079 11.8087Z"
+                                          fill="#282739" />
                                     </g>
                                     <defs>
-                                       <clipPath id="clip0_7827_40218">
-                                          <rect width="151" height="151" fill="white" />
+                                       <clipPath id="clip0_257_9248">
+                                          <rect width="22" height="22" fill="white" />
                                        </clipPath>
                                     </defs>
                                  </svg>
-                              </button>
-                              <button type="button" class="product-card__icon-card icon-card icon-card_border">
-                                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                       d="M17.9951 5.51484C17.7344 4.90528 17.3586 4.35291 16.8886 3.88864C16.4182 3.42298 15.8637 3.05293 15.2551 2.79861C14.624 2.53385 13.9471 2.39833 13.2637 2.39992C12.305 2.39992 11.3696 2.66506 10.5568 3.16588C10.3623 3.28569 10.1775 3.41727 10.0025 3.56065C9.8275 3.41727 9.64276 3.28569 9.44829 3.16588C8.63542 2.66506 7.70004 2.39992 6.74132 2.39992C6.05096 2.39992 5.382 2.53347 4.74998 2.79861C4.13935 3.05393 3.58901 3.4212 3.11646 3.88864C2.64584 4.35239 2.2699 4.90489 2.00994 5.51484C1.73963 6.14922 1.60156 6.82287 1.60156 7.51617C1.60156 8.17019 1.7338 8.8517 1.99633 9.54499C2.21608 10.1244 2.53111 10.7254 2.93366 11.3322C3.57151 12.2926 4.44855 13.2943 5.53757 14.3097C7.34222 15.9929 9.12937 17.1555 9.20521 17.2027L9.6661 17.5012C9.87029 17.6328 10.1328 17.6328 10.337 17.5012L10.7979 17.2027C10.8737 17.1536 12.6589 15.9929 14.4655 14.3097C15.5545 13.2943 16.4316 12.2926 17.0694 11.3322C17.472 10.7254 17.789 10.1244 18.0068 9.54499C18.2693 8.8517 18.4015 8.17019 18.4015 7.51617C18.4035 6.82287 18.2654 6.14922 17.9951 5.51484ZM10.0025 15.9477C10.0025 15.9477 3.07951 11.4678 3.07951 7.51617C3.07951 5.51484 4.71886 3.89257 6.74132 3.89257C8.16287 3.89257 9.39579 4.69388 10.0025 5.86443C10.6093 4.69388 11.8422 3.89257 13.2637 3.89257C15.2862 3.89257 16.9255 5.51484 16.9255 7.51617C16.9255 11.4678 10.0025 15.9477 10.0025 15.9477Z"
-                                       fill="#6F73EE" />
-                                    <path
-                                       d="M3.99986 4.00041C6.0995 2.60065 8.35221 3.39493 9.55275 4.17364C9.8961 4.02094 10.6335 3.80368 12 3.5C16.5 2.5 16.5 5 17.5 6.5C18.3 7.7 17.1667 10 16.5 11L9.99986 17L2.99986 10.5C2.3332 9.00014 1.59986 5.60041 3.99986 4.00041Z" />
-                                 </svg>
-                              </button>
-                           </div>
-                        </div>
+                                 <p class="payment-advantages__text">
+                                    <span class="payment-advantages__text_bold">Бесплатная доставка по РФ </span><br> от
+                                    1
+                                    дня
+                                    при заказе до 01.09
+                                 </p>
+                              </div>
+                              <div class="payment-advantages__buttons">
+                                 <button class="payment-advantages__button button button_purple" type="button">
+                                    Купить в 1 клик
+                                 </button>
+                                 <button class="payment-advantages__button button button_border" type="button">
+                                    Добавить в корзину
+                                 </button>
+                              </div>
+                           </li>
+                        </ul>
                      </div>
-                     <a href="<?= $infoCardItem['link'] ?>" class="product-card__button button_purple">
-                        Купить в 1 клик
-                     </a>
-                  </article>
-                  <?php endforeach; ?>
-               </div>
-               <a href="#" class="electric-scooters__link button button_border">
-                  Смотреть все
-               </a>
-            </div>
-         </section>
-         <!-- electric-scooters -->
-
-         <!-- row-blocks -->
-         <article class="row-blocks">
-            <div class="row-blocks__container container">
-               <ul class="row-blocks__list">
-                  <li class="row-blocks__item">
-                     <div class="row-blocks__info">
-                        <h3 class="row-blocks__middle-title middle-title">
-                           Подбор модели электросамоката
-                        </h3>
-                        <p class="row-blocks__text">
-                           Пройдите тест и выберите электросамокат по своим критериям
-                        </p>
-                        <a href="#" class="row-blocks__link link-arrow underline_purple">
-                           Подобрать модель
-                        </a>
-                     </div>
-                     <div class="row-blocks__image row-blocks__image_1">
-                        <img src="/img/row-blocks/row-blocks-image1.png" alt="Подбор модели электросамоката">
-                     </div>
-                  </li>
-                  <li class="row-blocks__item">
-                     <div class="row-blocks__info">
-                        <h3 class="row-blocks__middle-title middle-title">
-                           Сервисное
-                           обслуживание
-                        </h3>
-                        <p class="row-blocks__text">
-                           Крупнейший сервисный центр <br> в России для продуктов Kugoo
-                        </p>
-                        <a href="#" class="row-blocks__link link-arrow underline_purple">
-                           Подобрать модель
-                        </a>
-                     </div>
-                     <div class="row-blocks__image row-blocks__image_2">
-                        <img src="/img/row-blocks/row-blocks-image2.png" alt="Сервисное
-                        обслуживание">
-                     </div>
-                  </li>
-               </ul>
-            </div>
-         </article>
-         <!-- row-blocks -->
-
-         <!-- preview -->
-         <article class="preview">
-            <div class="preview__container">
-               <div class="preview__image preview__image_1">
-                  <img src="/img/preview/preview-image1.png"
-                     alt="Бесплатная доставка электросамокатов по России до 01.09">
-               </div>
-               <div class="preview__info">
-                  <p class="preview__subtitle preview__subtitle_stock preview__subtitle_service">
-                     Акция
-                  </p>
-                  <h2 class="preview__big-title big-title">
-                     Бесплатная доставка <br> электросамокатов <br> по России до 01.09
-                  </h2>
-                  <a href="#" class="preview__button button">
-                     Подробнее
-                  </a>
-               </div>
-            </div>
-         </article>
-         <!-- preview -->
-
-         <!-- popular-categories -->
-         <section class="popular-categories">
-            <div class="popular-categories__container container">
-               <div class="popular-categories__header">
-                  <h2 class="popular-categories__big-title big-title">
-                     Популярные категории
-                  </h2>
-                  <article class="popular-categories__block-manager block-manager">
-                     <div class="block-manager__image">
-                        <img src="/img/manager-image/manager-icon.png" alt="Менеджер">
-                     </div>
-                     <div class="block-manager__info">
-                        <p class="block-manager__text">
-                           Менеджер ответит на любой ваш вопрос о продуктах Kugoo
-                        </p>
-                        <button class="block-manager__button order-call underline_purple">
-                           Задать вопрос
-                        </button>
-                     </div>
-                  </article>
-               </div>
-               <div class="popular-categories__row">
-                  <a href="#" class="popular-categories__link">
-                     <article class="popular-categories__item">
-                        <p class="popular-categories__subtitle">
-                           Электросамокаты
-                        </p>
-                        <p class="popular-categories__text">
-                           от 29 900 ₽
-                        </p>
-                     </article>
-                     <img src="/img/popular-categories/electric-scooter.png" alt="Электроскутеры"
-                        class="popular-categories__image">
-                  </a>
-                  <a href="#" class="popular-categories__link">
-                     <article class="popular-categories__item">
-                        <p class="popular-categories__subtitle">
-                           Электровелосипеды
-                        </p>
-                        <p class="popular-categories__text">
-                           от 29 900 ₽
-                        </p>
-                     </article>
-                     <img src="/img/popular-categories/electric-bicycles.png" alt="Электровелосипеды"
-                        class="popular-categories__image">
-                  </a>
-                  <a href="#" class="popular-categories__link">
-                     <article class="popular-categories__item">
-                        <p class="popular-categories__subtitle">
-                           Весы
-                        </p>
-                        <p class="popular-categories__text">
-                           от 29 900 ₽
-                        </p>
-                     </article>
-                     <img src="/img/popular-categories/scales.png" alt="Весы" class="popular-categories__image">
-                  </a>
-                  <a href="#" class="popular-categories__link">
-                     <article class="popular-categories__item">
-                        <p class="popular-categories__subtitle">
-                           Робот-пылесоссы
-                        </p>
-                        <p class="popular-categories__text">
-                           от 29 900 ₽
-                        </p>
-                     </article>
-                     <img src="/img/popular-categories/robot-vacuum-cleaners.png" alt="Робот-пылесоссы"
-                        class="popular-categories__image">
-                  </a>
-                  <a href="#" class="popular-categories__link">
-                     <article class="popular-categories__item">
-                        <p class="popular-categories__subtitle">
-                           Электровелосипеды
-                        </p>
-                        <p class="popular-categories__text">
-                           от 29 900 ₽
-                        </p>
-                     </article>
-                     <img src="/img/popular-categories/electric-bicycles.png" alt="Электровелосипеды"
-                        class="popular-categories__image">
-                  </a>
-                  <a href="#" class="popular-categories__link">
-                     <article class="popular-categories__item">
-                        <p class="popular-categories__subtitle">
-                           Весы
-                        </p>
-                        <p class="popular-categories__text">
-                           от 29 900 ₽
-                        </p>
-                     </article>
-                     <img src="/img/popular-categories/scales.png" alt="Весы" class="popular-categories__image">
-                  </a>
-                  <a href="#" class="popular-categories__link">
-                     <article class="popular-categories__item">
-                        <p class="popular-categories__subtitle">
-                           Робот-пылесоссы
-                        </p>
-                        <p class="popular-categories__text">
-                           от 29 900 ₽
-                        </p>
-                     </article>
-                     <img src="/img/popular-categories/robot-vacuum-cleaners.png" alt="Робот-пылесоссы"
-                        class="popular-categories__image">
-                  </a>
-                  <a href="#" class="popular-categories__link">
-                     <article class="popular-categories__item">
-                        <p class="popular-categories__subtitle">
-                           Электровелосипеды
-                        </p>
-                        <p class="popular-categories__text">
-                           от 29 900 ₽
-                        </p>
-                     </article>
-                     <img src="/img/popular-categories/electric-bicycles.png" alt="Электровелосипеды"
-                        class="popular-categories__image">
-                  </a>
-               </div>
-               <a href="#" class="popular-categories__button button button_border">
-                  Смотреть все
-               </a>
-            </div>
-         </section>
-         <!-- popular-categories -->
-         
-         <!-- kugoo-russia -->
-         <article class="kugoo-russia">
-            <div class="kugoo-russia__container">
-               <div class="kugoo-russia__image">
-                  <img src="/img/kugoo-russia/happy-company.png" alt="Веселая компания людей с нашим самокатом">
-                  <div class="kugoo-russia__test-drive test-drive">
-                     <div class="test-drive__info">
-                        <p class="test-drive__subtitle">
-                           Тест-драйв в Москве
-                        </p>
-                        <p class="test-drive__text">
-                           Оцените все преимущества <br> самокатов лично
-                        </p>
-                     </div>
-                     <a href="#" class="test-drive__button-detailed button-detailed">
-                        Подробнее
-                     </a>
                   </div>
-               </div>
-               <div class="kugoo-russia__info">
-                  <h2 class="kugoo-russia__big-title big-title">
-                     Kugoo-Russia — первый официальный дилер Kugoo Kirin в России
-                  </h2>
-                  <p class="kugoo-russia__purpose">
-                     Наша цель предоставить полный ассортимент современной продукции Kugoo Kirin, которая улучшает и
-                     упрощает жизнь. Стремимся подарить комфорт и эмоции, поэтому помогаем с выбором и внимательно
-                     относимся к сервисному обслуживанию.
-                  </p>
-                  <div class="kugoo-russia__block">
-                     <p class="kugoo-russia__subtitle">
-                        Специализируемся исключительно на бренде Kugoo, поэтому вы получите:
-                     </p>
-                     <ul class="kugoo-russia__list">
-                        <li class="kugoo-russia__item">
-                           <div class="kugoo-russia__icon">
-                              <img src="/img/kugoo-russia/icon.svg" alt="Иконка">
-                           </div>
-                           <p class="kugoo-russia__text">
-                              цены от завода-изготовителя Jilong;
-                           </p>
+                  <div class="card__tabs-card tabs-card">
+                     <ul class="tabs-card__header">
+                        <li class="tabs-card__item active" data-tab="#info-card-product">
+                           О товаре
                         </li>
-                        <li class="kugoo-russia__item">
-                           <div class="kugoo-russia__icon">
-                              <img src="/img/kugoo-russia/icon.svg" alt="Иконка">
-                           </div>
-                           <p class="kugoo-russia__text">
-                              бесплатный тест-драйв самокатов;
-                           </p>
+                        <li class="tabs-card__item" data-tab="#desk-tabs">
+                           Характеристики
                         </li>
-                        <li class="kugoo-russia__item">
-                           <div class="kugoo-russia__icon">
-                              <img src="/img/kugoo-russia/icon.svg" alt="Иконка">
-                           </div>
-                           <p class="kugoo-russia__text">
-                              фирменную гарантию 1 год;
-                           </p>
+                        <li class="tabs-card__item" data-tab="#delivery-tabs">
+                           Доставка и оплата
                         </li>
-                        <li class="kugoo-russia__item">
-                           <div class="kugoo-russia__icon">
-                              <img src="/img/kugoo-russia/icon.svg" alt="Иконка">
-                           </div>
-                           <p class="kugoo-russia__text">
-                              ремонт и обслуживание от 1 дня в собственном сервисном центре;
-                           </p>
+                        <li class="tabs-card__item" data-tab="#guarantees-tabs">
+                           Гарантии
                         </li>
-                        <li class="kugoo-russia__item">
-                           <div class="kugoo-russia__icon">
-                              <img src="/img/kugoo-russia/icon.svg" alt="Иконка">
-                           </div>
-                           <p class="kugoo-russia__text">
-                              более 1 000 запчастей и аксессуаров в наличии
-                           </p>
+                        <li class="tabs-card__item" data-tab="#max-version">
+                           Версия MAX
                         </li>
                      </ul>
-                     <a href="#" class="kugoo-russia__link underline_purple">
-                        Смотреть сертификат
-                     </a>
+                     <ul class="tabs-card__content">
+                        <li class="tabs-card-li tabs-card__info-card-product info-card-product" id="info-card-product">
+                           <div class="info-card-product__content">
+                              <div class="info-card-product__trigger">
+                                 <h2 class="info-card-product__middle-title middle-title">
+                                    Электросамокат Kugoo Kirin M4 c мощными характеристиками и стильным дизайном
+                                 </h2>
+                                 <p class="info-card-product__text">
+                                    Приобретая самокат Kugoo Kirin M4, вы получите множество положительных эмоций и
+                                    сможете
+                                    беспрепятственно передвигаться по городу.
+                                 </p>
+                                 <p class="info-card-product__text">
+                                    Самокат может набирать скорость до 45 км/ч благодаря усиленному мотор-колесу и
+                                    батарее.
+                                    Удобный дисплей позволяет легкостью отслеживать и переключать скорости передвижения,
+                                    контролировать заряд аккумулятора, а также пройденный путь за все время и за текущую
+                                    поездку в километрах.
+                                 </p>
+                              </div>
+                              <div class="info-card-product__wrapper">
+                                 <div class="info-card-product__set-info-card set-info-card">
+                                    <h4 class="set-info-card__title">
+                                       Что в комплекте
+                                    </h4>
+                                    <ul class="set-info-card__list">
+                                       <li class="set-info-card__item">
+                                          <svg class="set-info-card__icon" width="20" height="20" viewBox="0 0 20 20"
+                                             fill="none" xmlns="http://www.w3.org/2000/svg">
+                                             <g clip-path="url(#clip0_258_9323)">
+                                                <path
+                                                   d="M17.0821 2.26416H16.4973V16.6313C16.4973 17.5858 15.7204 18.3627 14.7659 18.3627H8.84069H4.12891V18.8953C4.12891 19.5052 4.62389 20.0001 5.23375 20.0001H11.1569H17.08C17.6899 20.0001 18.1849 19.5052 18.1849 18.8953V3.36901C18.1849 2.75915 17.692 2.26416 17.0821 2.26416Z"
+                                                   fill="#5D6C7B" />
+                                                <path
+                                                   d="M8.84036 17.736H14.7635C15.3734 17.736 15.8684 17.241 15.8684 16.6312V2.26399V1.10485C15.8684 0.494987 15.3734 0 14.7635 0H8.84036H6.87085V0.365497C6.87501 0.403091 6.87712 0.442774 6.87712 0.482456V2.89056V3.50877C6.87712 4.36717 6.17954 5.06474 5.32114 5.06474H4.70293H2.29482C2.26349 5.06474 2.23008 5.06266 2.19875 5.06057H1.81445V16.6312C1.81445 17.241 2.30944 17.736 2.9193 17.736H4.13066H8.84036ZM9.06383 13.9808H5.20209C4.91387 13.9808 4.67995 13.7468 4.67995 13.4586C4.67995 13.1704 4.91387 12.9365 5.20209 12.9365H9.06592C9.35414 12.9365 9.58806 13.1704 9.58806 13.4586C9.58806 13.7468 9.35206 13.9808 9.06383 13.9808ZM12.9277 11.3158H5.20209C4.91387 11.3158 4.67995 11.0819 4.67995 10.7937C4.67995 10.5054 4.91387 10.2715 5.20209 10.2715H12.9277C13.2159 10.2715 13.4498 10.5054 13.4498 10.7937C13.4498 11.0819 13.2159 11.3158 12.9277 11.3158ZM5.20209 7.44152H12.9277C13.2159 7.44152 13.4498 7.67544 13.4498 7.96366C13.4498 8.25188 13.2159 8.4858 12.9277 8.4858H5.20209C4.91387 8.4858 4.67995 8.25188 4.67995 7.96366C4.67995 7.67544 4.91387 7.44152 5.20209 7.44152Z"
+                                                   fill="#5D6C7B" />
+                                                <path
+                                                   d="M2.295 4.43807H5.32131C5.3234 4.43807 5.32758 4.43807 5.32967 4.43807C5.8351 4.43389 6.24445 4.02454 6.24863 3.51911C6.24863 3.51702 6.24863 3.51284 6.24863 3.51075V0.482349C6.24863 0.202483 6.01889 0.0166016 5.78081 0.0166016C5.66594 0.0166016 5.55107 0.0583727 5.455 0.154446L1.96501 3.64442C1.67261 3.93682 1.87938 4.43807 2.295 4.43807Z"
+                                                   fill="#5D6C7B" />
+                                             </g>
+                                             <defs>
+                                                <clipPath id="clip0_258_9323">
+                                                   <rect width="20" height="20" fill="white" />
+                                                </clipPath>
+                                             </defs>
+                                          </svg>
+                                          <div class="set-info-card__info">
+                                             <p class="set-info-card__subtitle">
+                                                Инструкция
+                                             </p>
+                                             <a href="#" class="set-info-card__link">
+                                                Посмотреть
+                                             </a>
+                                          </div>
+                                       </li>
+                                       <li class="set-info-card__item">
+                                          <svg class="set-info-card__icon" width="20" height="20" viewBox="0 0 20 20"
+                                             fill="none" xmlns="http://www.w3.org/2000/svg">
+                                             <g clip-path="url(#clip0_258_9387)">
+                                                <path
+                                                   d="M18.0755 15.1239L16.9903 2.10109C16.9451 1.56 16.7299 1.04715 16.3842 0.656881C16.009 0.233446 15.5248 0.000244141 15.0209 0.000244141H13.7656C13.4421 0.000244141 13.1797 0.262586 13.1797 0.586178C13.1797 0.90977 13.4421 1.17211 13.7656 1.17211H15.0209C15.3596 1.17211 15.772 1.59363 15.8225 2.19847L16.6911 12.6228C14.5174 12.9899 12.8421 14.7525 12.5861 16.9455H7.4137C7.12277 14.4751 5.0161 12.5522 2.46881 12.5522C1.72237 12.5522 1.00428 12.7136 0.33464 13.0317C0.0423374 13.1705 -0.0820369 13.52 0.0568295 13.8123C0.195657 14.1046 0.545186 14.2289 0.837489 14.0901C1.34878 13.8472 1.89764 13.7241 2.46881 13.7241C4.36899 13.7241 5.94832 15.1232 6.23097 16.9454H4.86668C4.6029 15.8662 3.62818 15.0627 2.46877 15.0627C1.10753 15.0627 0.000111089 16.1701 0.000111089 17.5314C0.000111089 18.8926 1.10753 20 2.46877 20C3.62818 20 4.6029 19.1965 4.86668 18.1173H13.138C13.4616 18.1173 13.7239 17.8549 13.7239 17.5314C13.7239 15.6855 15.0311 14.1409 16.7888 13.7959L16.9012 15.1444C15.8442 15.4236 15.0625 16.3878 15.0625 17.5313C15.0625 18.8926 16.17 20 17.5312 20C18.8925 20 20 18.8926 20 17.5313C20 16.3572 19.1757 15.3725 18.0755 15.1239Z"
+                                                   fill="#5D6C7B" />
+                                             </g>
+                                             <defs>
+                                                <clipPath id="clip0_258_9387">
+                                                   <rect width="20" height="20" fill="white" />
+                                                </clipPath>
+                                             </defs>
+                                          </svg>
+                                          <div class="set-info-card__info">
+                                             <p class="set-info-card__subtitle">
+                                                Чехол
+                                             </p>
+                                          </div>
+                                       </li>
+                                       <li class="set-info-card__item">
+                                          <svg class="set-info-card__icon" width="20" height="20" viewBox="0 0 20 20"
+                                             fill="none" xmlns="http://www.w3.org/2000/svg">
+                                             <g clip-path="url(#clip0_258_9343)">
+                                                <path
+                                                   d="M8.42715 6.13675H11.1218V4.96487H8.42715V2.53222H11.1218V1.36034H8.42715V0.627686H5.48633V6.86937H8.42715V6.13675Z"
+                                                   fill="#5D6C7B" />
+                                                <path
+                                                   d="M4.31531 0H1.18945C0.542227 0 0.0175781 0.524648 0.0175781 1.17188V8.39625C0.0175781 9.04348 0.542227 9.56812 1.18945 9.56812H4.31531V0Z"
+                                                   fill="#5D6C7B" />
+                                                <path
+                                                   d="M18.1528 14.2601H19.3246V3.46242C19.3246 1.55324 17.7714 0 15.8623 0C13.9531 0 12.3998 1.55324 12.3998 3.46242V14.1721C12.3998 16.7395 10.3112 18.8281 7.74387 18.8281C5.17656 18.8281 3.08789 16.7395 3.08789 14.1721V10.74H1.91602V14.1721C1.91602 17.3856 4.53035 20 7.74387 20C10.9574 20 13.5717 17.3856 13.5717 14.1721V3.46242C13.5717 2.19941 14.5993 1.17188 15.8623 1.17188C17.1253 1.17188 18.1528 2.19941 18.1528 3.46242V14.2601H18.1528Z"
+                                                   fill="#5D6C7B" />
+                                                <path
+                                                   d="M17.498 15.4319V18.136H18.1547V19.9999H19.3266V18.136H19.9832V15.4319H17.498Z"
+                                                   fill="#5D6C7B" />
+                                             </g>
+                                             <defs>
+                                                <clipPath id="clip0_258_9343">
+                                                   <rect width="20" height="20" fill="white" />
+                                                </clipPath>
+                                             </defs>
+                                          </svg>
+                                          <div class="set-info-card__info">
+                                             <p class="set-info-card__subtitle">
+                                                Зарядное устройство
+                                             </p>
+                                          </div>
+                                       </li>
+                                       <li class="set-info-card__item">
+                                          <svg class="set-info-card__icon" width="20" height="20" viewBox="0 0 20 20"
+                                             fill="none" xmlns="http://www.w3.org/2000/svg">
+                                             <g clip-path="url(#clip0_258_9368)">
+                                                <path
+                                                   d="M20 10.0112L18.2883 7.7815L18.6712 5.01123L16.0586 3.97519L15.0225 1.36258L12.2523 1.74546L10 0.0112305L7.77027 1.72294L5 1.34006L3.96396 3.95267L1.35135 4.98871L1.73423 7.75898L0 10.0112L1.71171 12.241L1.32883 15.0112L3.94144 16.0473L4.97748 18.6599L7.74775 18.277L9.97748 19.9887L12.2072 18.277L14.9775 18.6599L16.0135 16.0473L18.6261 14.9887L18.2432 12.2184L20 10.0112ZM9.18919 13.2545L5.85586 10.5067L6.57658 9.62835L9.05405 11.6554L13.2883 6.76799L14.1441 7.51123L9.18919 13.2545Z"
+                                                   fill="#5D6C7B" />
+                                             </g>
+                                             <defs>
+                                                <clipPath id="clip0_258_9368">
+                                                   <rect width="20" height="20" fill="white" />
+                                                </clipPath>
+                                             </defs>
+                                          </svg>
+                                          <div class="set-info-card__info">
+                                             <p class="set-info-card__subtitle">
+                                                Гарантийный талон
+                                             </p>
+                                          </div>
+                                       </li>
+                                    </ul>
+                                 </div>
+                                 <div class="info-card-product__features-info-card features-info-card">
+                                    <h4 class="features-info-card__title">
+                                       Ключевые особенности Kugoo Kirin M4
+                                    </h4>
+                                    <ul class="features-info-card__row">
+                                       <li class="features-info-card__item">
+                                          Для города
+                                       </li>
+                                       <li class="features-info-card__item">
+                                          Быстрый
+                                       </li>
+                                       <li class="features-info-card__item">
+                                          Комфортный
+                                       </li>
+                                       <li class="features-info-card__item">
+                                          Легкий
+                                       </li>
+                                    </ul>
+                                 </div>
+                              </div>
+                           </div>
+                        </li>
+                        <li class="tabs-card-li tabs-card__desk-tabs desk-tabs" id="desk-tabs">
+                           <div class="desk-tabs__content">
+                              <ul class="desk-tabs__list">
+                                 <li class="desk-tabs__item">
+                                    <span class="desk-tabs__name">
+                                       Масса нетто
+                                    </span>
+                                    <span class="desk-tabs__value">
+                                       22 кг
+                                    </span>
+                                 </li>
+                                 <li class="desk-tabs__item">
+                                    <span class="desk-tabs__name">
+                                       Мощность
+                                    </span>
+                                    <span class="desk-tabs__value">
+                                       500 W
+                                    </span>
+                                 </li>
+                                 <li class="desk-tabs__item">
+                                    <span class="desk-tabs__name">
+                                       Аккумулятор
+                                    </span>
+                                    <span class="desk-tabs__value">
+                                       10 000 mAh
+                                    </span>
+                                 </li>
+                                 <li class="desk-tabs__item">
+                                    <span class="desk-tabs__name">
+                                       Максимальная скорость
+                                    </span>
+                                    <span class="desk-tabs__value">
+                                       до 40 км/ч*
+                                    </span>
+                                 </li>
+                                 <li class="desk-tabs__item">
+                                    <span class="desk-tabs__name">
+                                       Максимальный пробег
+                                    </span>
+                                    <span class="desk-tabs__value">
+                                       до 30 км*
+                                    </span>
+                                 </li>
+                                 <li class="desk-tabs__item">
+                                    <span class="desk-tabs__name">
+                                       Время полной зарядки
+                                    </span>
+                                    <span class="desk-tabs__value">
+                                       6 часов
+                                    </span>
+                                 </li>
+                                 <li class="desk-tabs__item">
+                                    <span class="desk-tabs__name">
+                                       Максимальная нагрузка
+                                    </span>
+                                    <span class="desk-tabs__value">
+                                       140 кг
+                                    </span>
+                                 </li>
+                                 <li class="desk-tabs__item">
+                                    <span class="desk-tabs__name">
+                                       Размер колес
+                                    </span>
+                                    <span class="desk-tabs__value">
+                                       10
+                                    </span>
+                                 </li>
+                              </ul>
+                              <ul class="desk-tabs__list">
+                                 <li class="desk-tabs__item">
+                                    <span class="desk-tabs__name">
+                                       Тип колес
+                                    </span>
+                                    <span class="desk-tabs__value">
+                                       Надувные
+                                    </span>
+                                 </li>
+                                 <li class="desk-tabs__item">
+                                    <span class="desk-tabs__name">
+                                       Габариты (ДВШ), см
+                                    </span>
+                                    <span class="desk-tabs__value">
+                                       В разложенном виде: 113/86-116/60 <br>
+                                       В сложенном виде: 113/37/22
+                                    </span>
+                                 </li>
+                                 <li class="desk-tabs__item">
+                                    <span class="desk-tabs__name">
+                                       Подсветка
+                                    </span>
+                                    <span class="desk-tabs__value">
+                                       Передняя фара, стоп-сигнал, боковая
+                                    </span>
+                                 </li>
+                                 <li class="desk-tabs__item">
+                                    <span class="desk-tabs__name">
+                                       Привод
+                                    </span>
+                                    <span class="desk-tabs__value">
+                                       Задний
+                                    </span>
+                                 </li>
+                                 <li class="desk-tabs__item">
+                                    <span class="desk-tabs__name">
+                                       Тормозная система
+                                    </span>
+                                    <span class="desk-tabs__value">
+                                       Передняя и задняя дисковая
+                                    </span>
+                                 </li>
+                                 <li class="desk-tabs__item">
+                                    <span class="desk-tabs__name">
+                                       Комплектация
+                                    </span>
+                                    <span class="desk-tabs__value">
+                                       Товарный чек, гарантийный талон, з/у
+                                    </span>
+                                 </li>
+                                 <li class="desk-tabs__item">
+                                    <span class="desk-tabs__name">
+                                       Гарантия
+                                    </span>
+                                    <span class="desk-tabs__value">
+                                       12 месяцев
+                                    </span>
+                                 </li>
+                                 <li class="desk-tabs__text">
+                                    *указаны максимально возможные характеристики, зависящие от веса райдера, рельефа
+                                    местности, погодных условий и температуры окружающей среды
+                                 </li>
+                              </ul>
+                           </div>
+                        </li>
+                        <li class="tabs-card-li tabs-card__delivery-tabs delivery-tabs" id="delivery-tabs">
+                           <div class="delivery-tabs__content">
+                              <div class="delivery-tabs__info">
+                                 <h3 class="delivery-tabs__middle-title middle-title">
+                                    5 способов оплаты
+                                 </h3>
+                                 <p class="delivery-tabs__subtitle">
+                                    Вы можете оплатить покупку:
+                                 </p>
+                                 <ul class="delivery-tabs__list">
+                                    <li class="delivery-tabs__item">
+                                       <div class="delivery-tabs__img">
+                                          <img src="/img/kugoo-russia/icon.svg" alt="Иконка">
+                                       </div>
+                                       <p class="delivery-tabs__text">
+                                          наличными
+                                       </p>
+                                    </li>
+                                    <li class="delivery-tabs__item">
+                                       <div class="delivery-tabs__img">
+                                          <img src="/img/kugoo-russia/icon.svg" alt="Иконка">
+                                       </div>
+                                       <p class="delivery-tabs__text">
+                                          картой
+                                       </p>
+                                    </li>
+                                    <li class="delivery-tabs__item">
+                                       <div class="delivery-tabs__img">
+                                          <img src="/img/kugoo-russia/icon.svg" alt="Иконка">
+                                       </div>
+                                       <p class="delivery-tabs__text">
+                                          онлайн на сайте через корзину
+                                       </p>
+                                    </li>
+                                    <li class="delivery-tabs__item">
+                                       <div class="delivery-tabs__img">
+                                          <img src="/img/kugoo-russia/icon.svg" alt="Иконка">
+                                       </div>
+                                       <p class="delivery-tabs__text">
+                                          через интернет-банкинг по счету
+                                       </p>
+                                    </li>
+                                    <li class="delivery-tabs__item">
+                                       <div class="delivery-tabs__img">
+                                          <img src="/img/kugoo-russia/icon.svg" alt="Иконка">
+                                       </div>
+                                       <p class="delivery-tabs__text">
+                                          в кредит от «Сбербанка»
+                                       </p>
+                                    </li>
+                                 </ul>
+                              </div>
+                              <div class="delivery-tabs__info">
+                                 <h3 class="delivery-tabs__middle-title middle-title">
+                                    Доставка по всей России
+                                 </h3>
+                                 <ul class="delivery-tabs__list">
+                                    <li class="delivery-tabs__item">
+                                       <div class="delivery-tabs__img">
+                                          <img src="/img/kugoo-russia/icon.svg" alt="Иконка">
+                                       </div>
+                                       <p class="delivery-tabs__text">
+                                          Отправляем заказы по всей России день в день службой доставки товаров CDEK
+                                       </p>
+                                    </li>
+                                    <li class="delivery-tabs__item">
+                                       <div class="delivery-tabs__img">
+                                          <img src="/img/kugoo-russia/icon.svg" alt="Иконка">
+                                       </div>
+                                       <p class="delivery-tabs__text">
+                                          Самовывоз из магазинов в Москве, Санкт-Петербурге и Краснодаре
+                                       </p>
+                                    </li>
+                                 </ul>
+                              </div>
+                           </div>
+                        </li>
+                        <li class="tabs-card-li tabs-card__guarantees-tabs guarantees-tabs" id="guarantees-tabs">
+                           <div class="guarantees-tabs__content">
+                              <article class="guarantees-tabs__row-blocks row-blocks">
+                                 <ul class="row-blocks__list">
+                                    <li class="row-blocks__item">
+                                       <div class="row-blocks__info">
+                                          <h3 class="row-blocks__middle-title middle-title">
+                                             14 дней на обмен и возврат
+                                          </h3>
+                                          <p class="row-blocks__text">
+                                             Если вас, что-то не устроит в товаре, мы обменяем его на новый или вернем
+                                             деньги
+                                          </p>
+                                       </div>
+                                       <div class="row-blocks__image row-blocks__image_4">
+                                          <img src="/img/row-blocks/row-blocks-image5.png"
+                                             alt="14 дней на обмен и возврат">
+                                       </div>
+                                    </li>
+                                    <li class="row-blocks__item">
+                                       <div class="row-blocks__info">
+                                          <h3 class="row-blocks__middle-title middle-title">
+                                             1 год на <br> самокаты
+                                          </h3>
+                                          <p class="row-blocks__text">
+                                             Обеспечиваем гарантийные обязательства на весь ассортимент самокатов в
+                                             стандартной комплектации
+                                          </p>
+                                       </div>
+                                       <div class="row-blocks__image row-blocks__image_5">
+                                          <img src="/img/row-blocks/row-blocks-image6.png" alt="1 год на самокаты">
+                                       </div>
+                                    </li>
+                                    <li class="row-blocks__item">
+                                       <div class="row-blocks__info">
+                                          <h3 class="row-blocks__middle-title middle-title">
+                                             Расширенная гарантия 2 года для версии MAX
+                                          </h3>
+                                       </div>
+                                       <div class="row-blocks__image row-blocks__image_6">
+                                          <img src="/img/row-blocks/row-blocks-image8.png" alt="1 год на самокаты">
+                                       </div>
+                                    </li>
+                                    <li class="row-blocks__item">
+                                       <div class="row-blocks__info">
+                                          <h3 class="row-blocks__middle-title middle-title">
+                                             Расширенная гарантия 3 года для версии VIP
+                                          </h3>
+                                       </div>
+                                       <div class="row-blocks__image row-blocks__image_7">
+                                          <img src="/img/row-blocks/row-blocks-image7.png" alt="1 год на самокаты">
+                                       </div>
+                                    </li>
+                                 </ul>
+                              </article>
+                           </div>
+                        </li>
+                        <li class="tabs-card-li tabs-card__max-version max-version" id="max-version">
+                           <div class="max-version__content">
+                              <h3 class="max-version__middle-title middle-title">
+                                 Преимущества версии MAX
+                              </h3>
+                              <ul class="max-version__row">
+                                 <li class="max-version__item">
+                                    <p class="max-version__title">
+                                       Бесплатная гидроизоляция
+                                    </p>
+                                    <p class="max-version__text">
+                                       Защитим ваш самокат от <br> попадания влаги.
+                                    </p>
+                                 </li>
+                                 <li class="max-version__item">
+                                    <p class="max-version__title">
+                                       Бесплатная настройка
+                                    </p>
+                                    <p class="max-version__text">
+                                       Комплексно подготовим ваш <br> самокат к эксплуатации.
+                                    </p>
+                                 </li>
+                                 <li class="max-version__item">
+                                    <p class="max-version__title">
+                                       Гарантия 2 года
+                                    </p>
+                                 </li>
+                                 <li class="max-version__item">
+                                    <p class="max-version__title">
+                                       500 руб. на покупку <br> аксессуаров
+                                    </p>
+                                    <p class="max-version__text">
+                                       При покупке версии MAX вы получаете купон номиналом 500 р. на покупку любых
+                                       аксессуаров, представленных в нашем магазине.
+                                    </p>
+                                 </li>
+                              </ul>
+                              <ul class="max-version__row max-version__row_grid-size-row">
+                                 <li class="max-version__item max-version__item_grid-3">
+                                    <p class="max-version__title">
+                                       Скидка 10% <br> на ремонт и запчасти
+                                    </p>
+                                    <p class="max-version__text max-version__text_bold">
+                                       Вы получаете бессрочную скидку 10%:
+                                    </p>
+                                    <ul class="max-version__list">
+                                       <li class="max-version__li">
+                                          <div class="max-version__icon">
+                                             <img src="/img/kugoo-russia/icon.svg" alt="Иконка">
+                                          </div>
+                                          <p class="max-version__text">
+                                             на платный ремонт любой
+                                          </p>
+                                       </li>
+                                       <li class="max-version__li">
+                                          <div class="max-version__icon">
+                                             <img src="/img/kugoo-russia/icon.svg" alt="Иконка">
+                                          </div>
+                                          <p class="max-version__text">
+                                             сложности (при
+                                          </p>
+                                       </li>
+                                       <li class="max-version__li">
+                                          <div class="max-version__icon">
+                                             <img src="/img/kugoo-russia/icon.svg" alt="Иконка">
+                                          </div>
+                                          <p class="max-version__text">
+                                             негарантийном случае);
+                                          </p>
+                                       </li>
+                                       <li class="max-version__li">
+                                          <div class="max-version__icon">
+                                             <img src="/img/kugoo-russia/icon.svg" alt="Иконка">
+                                          </div>
+                                          <p class="max-version__text">
+                                             на все запчасти
+                                          </p>
+                                       </li>
+                                    </ul>
+                                 </li>
+                                 <li class="max-version__item max-version__item_grid-3">
+                                    <p class="max-version__title">
+                                       Дополнительные <br> услуги
+                                    </p>
+                                    <p class="max-version__text max-version__text_bold">
+                                       Дополнительно вы можете заказать:
+                                    </p>
+                                    <ul class="max-version__list">
+                                       <li class="max-version__li">
+                                          <div class="max-version__icon">
+                                             <img src="/img/kugoo-russia/icon.svg" alt="Иконка">
+                                          </div>
+                                          <p class="max-version__text">
+                                             недорожные покрышки;
+                                          </p>
+                                       </li>
+                                       <li class="max-version__li">
+                                          <div class="max-version__icon">
+                                             <img src="/img/kugoo-russia/icon.svg" alt="Иконка">
+                                          </div>
+                                          <p class="max-version__text">
+                                             страховку (негарантийный
+                                          </p>
+                                       </li>
+                                       <li class="max-version__li">
+                                          <div class="max-version__icon">
+                                             <img src="/img/kugoo-russia/icon.svg" alt="Иконка">
+                                          </div>
+                                          <p class="max-version__text">
+                                             ремонт).
+                                          </p>
+                                       </li>
+                                    </ul>
+                                 </li>
+                                 <li class="max-version__item max-version__item_grid-3">
+                                    <p class="max-version__title">
+                                       Ремонт в приоритетном <br> порядке
+                                    </p>
+                                    <p class="max-version__text">
+                                       Ваш электросамокат будет ремонтироваться в первую очередь. При наличии нужной
+                                       запчасти время ремонта может составлять до 3 часов.
+                                    </p>
+                                 </li>
+                                 <li class="max-version__item max-version__item_grid-3">
+                                    <p class="max-version__title">
+                                       500 руб. на покупку <br> аксессуаров
+                                    </p>
+                                    <p class="max-version__text">
+                                       Ежегодное бесплатное техническое обслуживание вашего транспорта на протяжении 2
+                                       лет
+                                       в наших сервисных центрах в Москве, Санкт-Петербурге и Краснодаре.
+                                    </p>
+                                 </li>
+                              </ul>
+                           </div>
+                        </li>
+                     </ul>
                   </div>
                </div>
             </div>
          </article>
-         <!-- kugoo-russia -->
-
-         <!-- favorable-prices -->
-         <section class="favorable-prices">
-            <div class="favorable-prices__container container">
-               <div class="favorable-prices__header">
-                  <h2 class="favorable-prices__big-title big-title">
-                     Предлагаем самые выгодные цены
-                     на продукты Kugoo за счет прямых поставок
-                  </h2>
-                  <p class="favorable-prices__subtitle">
-                     и заботимся об удобстве покупателей
-                  </p>
-               </div>
-               <div class="favorable-prices__prices-tabs prices-tabs">
-                  <div class="prices-tabs__buttons">
-                     <button class="prices-tabs__button button" data-prices-tab="#pricesTab1">
-                        Интернет-магазин
-                     </button>
-                     <button class="prices-tabs__button button" data-prices-tab="#pricesTab2">
-                        Сервисный центр
-                     </button>
-                  </div>
-                  <ul class="prices-tabs__list" id="pricesTab1">
-                     <li class="prices-tabs__item">
-                        <div class="prices-tabs__icon">
-                           <svg class="prices-tabs__icon" width="25" height="25" viewBox="0 0 25 25" fill="none"
-                              xmlns="http://www.w3.org/2000/svg">
-                              <g clip-path="url(#clip0_199_2303)">
-                                 <path
-                                    d="M23.9404 9.0679H18.7539L15.8446 2.40613C15.6827 2.03548 15.251 1.86609 14.8802 2.02805C14.5095 2.18992 14.3403 2.62171 14.5022 2.99241L17.1555 9.06795H7.84456L10.4979 2.99241C10.6597 2.62171 10.4905 2.18997 10.1198 2.02805C9.74915 1.86609 9.31731 2.03538 9.15549 2.40613L6.24612 9.0679H1.05964C0.381177 9.0679 -0.122338 9.68211 0.0260991 10.3286L2.7573 22.2246C2.86575 22.697 3.29514 23.0327 3.79085 23.0327H21.2092C21.7049 23.0327 22.1343 22.697 22.2428 22.2246L24.974 10.3286C25.1224 9.68216 24.6188 9.0679 23.9404 9.0679ZM6.38391 11.3142C6.28606 11.3142 6.1866 11.2945 6.09114 11.2528C5.72044 11.0909 5.55115 10.6592 5.71306 10.2884L6.26326 9.02854H7.86169L7.05544 10.8746C6.93528 11.15 6.66624 11.3142 6.38391 11.3142ZM8.83792 19.1265C8.83792 19.531 8.50999 19.8589 8.10549 19.8589C7.701 19.8589 7.37307 19.531 7.37307 19.1265V13.7554C7.37307 13.3509 7.701 13.023 8.10549 13.023C8.50999 13.023 8.83792 13.3509 8.83792 13.7554V19.1265ZM13.2324 19.1265C13.2324 19.531 12.9045 19.8589 12.5 19.8589C12.0955 19.8589 11.7676 19.531 11.7676 19.1265V13.7554C11.7676 13.3509 12.0955 13.023 12.5 13.023C12.9045 13.023 13.2324 13.3509 13.2324 13.7554V19.1265ZM17.627 19.1265C17.627 19.531 17.299 19.8589 16.8946 19.8589C16.4901 19.8589 16.1621 19.531 16.1621 19.1265V13.7554C16.1621 13.3509 16.4901 13.023 16.8946 13.023C17.299 13.023 17.627 13.3509 17.627 13.7554V19.1265ZM18.9089 11.2528C18.8135 11.2945 18.714 11.3142 18.6161 11.3142C18.3338 11.3142 18.0648 11.15 17.9446 10.8747L17.1383 9.02859H18.7367L19.2869 10.2885C19.4489 10.6592 19.2796 11.0909 18.9089 11.2528Z"
-                                    fill="#6F73EE" />
-                              </g>
-                              <defs>
-                                 <clipPath id="clip0_199_2303">
-                                    <rect width="25" height="25" fill="white" />
-                                 </clipPath>
-                              </defs>
-                           </svg>
-                        </div>
-                        <p class="prices-tabs__subtitle">
-                           Х товаров в каталоге
-                        </p>
-                        <p class="prices-tabs__text">
-                           Выбирайте товар, который подходит по цене и характеристикам. Если товара нет в наличии — мы
-                           сообщим вам о его поступлении.
-                        </p>
-                     </li>
-                     <li class="prices-tabs__item">
-                        <div class="prices-tabs__icon">
-                           <svg width="25" height="25" viewBox="0 0 25 25" fill="none"
-                              xmlns="http://www.w3.org/2000/svg">
-                              <g clip-path="url(#clip0_199_2341)">
-                                 <path
-                                    d="M20.3125 16.6667C17.7281 16.6667 15.625 14.5635 15.625 11.9792C15.625 9.39479 17.7281 7.29167 20.3125 7.29167H22.9167V5.98958C22.9167 4.40937 21.6323 3.125 20.0521 3.125H2.86458C1.28438 3.125 0 4.40937 0 5.98958V19.0104C0 20.5906 1.28438 21.875 2.86458 21.875H20.0521C21.6323 21.875 22.9167 20.5906 22.9167 19.0104V16.6667H20.3125Z"
-                                    fill="#6F73EE" />
-                                 <path
-                                    d="M24.2187 8.85419H20.3125C18.5896 8.85419 17.1875 10.2563 17.1875 11.9792C17.1875 13.7021 18.5896 15.1042 20.3125 15.1042H24.2187C24.65 15.1042 25 14.7542 25 14.3229V9.63544C25 9.20419 24.65 8.85419 24.2187 8.85419ZM20.3125 13.0209C19.7375 13.0209 19.2708 12.5542 19.2708 11.9792C19.2708 11.4042 19.7375 10.9375 20.3125 10.9375C20.8875 10.9375 21.3542 11.4042 21.3542 11.9792C21.3542 12.5542 20.8875 13.0209 20.3125 13.0209Z"
-                                    fill="#6F73EE" />
-                              </g>
-                              <defs>
-                                 <clipPath id="clip0_199_2341">
-                                    <rect width="25" height="25" fill="white" />
-                                 </clipPath>
-                              </defs>
-                           </svg>
-
-                        </div>
-                        <p class="prices-tabs__subtitle">
-                           5 способов оплаты
-                        </p>
-                        <p class="prices-tabs__text">
-                           Вы можете оплатить покупку наличными, картой, онлайн на сайте, через интернет-банкинг или в
-                           кредит от «Сбербанка».
-                        </p>
-                     </li>
-                     <li class="prices-tabs__item">
-                        <div class="prices-tabs__icon">
-                           <svg width="25" height="25" viewBox="0 0 25 25" fill="none"
-                              xmlns="http://www.w3.org/2000/svg">
-                              <g clip-path="url(#clip0_199_2344)">
-                                 <path
-                                    d="M25 12.5141L22.8604 9.72694L23.339 6.2641L20.0732 4.96905L18.7782 1.70329L15.3153 2.18189L12.5 0.0140991L9.71284 2.15374L6.25 1.67514L4.95495 4.9409L1.68919 6.23595L2.16779 9.69878L0 12.5141L2.13964 15.3013L1.66104 18.7641L4.9268 20.0591L6.22185 23.3249L9.68468 22.8463L12.4718 24.9859L15.259 22.8463L18.7218 23.3249L20.0169 20.0591L23.2827 18.7359L22.8041 15.2731L25 12.5141ZM11.4865 16.5682L7.31982 13.1335L8.22072 12.0355L11.3176 14.5693L16.6104 8.46005L17.6802 9.3891L11.4865 16.5682Z"
-                                    fill="#6F73EE" />
-                              </g>
-                              <defs>
-                                 <clipPath id="clip0_199_2344">
-                                    <rect width="25" height="25" fill="white" />
-                                 </clipPath>
-                              </defs>
-                           </svg>
-                        </div>
-                        <p class="prices-tabs__subtitle">
-                           Полная документация <br> и гарантия 1 год
-                        </p>
-                        <p class="prices-tabs__text">
-                           При покупке вам выдается кассовый чек, товарный чек и гарантийный талон – эти документы дают
-                           право на гарантийное обслуживание.
-                        </p>
-                     </li>
-                     <li class="prices-tabs__item">
-                        <div class="prices-tabs__icon">
-                           <svg width="25" height="25" viewBox="0 0 25 25" fill="none"
-                              xmlns="http://www.w3.org/2000/svg">
-                              <g clip-path="url(#clip0_199_2363)">
-                                 <path fill-rule="evenodd" clip-rule="evenodd"
-                                    d="M18.4024 6.49967V0.732231C18.4024 0.327873 18.0746 0 17.6702 0H12.7254V5.56831C12.7254 6.09436 12.1645 6.49948 11.6159 6.19602L9.22466 4.98524L6.78516 6.22044C6.29363 6.46877 5.72524 6.10085 5.72562 5.56831L5.72429 0H0.779106C0.374748 0 0.046875 0.327873 0.046875 0.732231V17.6233C0.046875 18.0277 0.374748 18.3556 0.779106 18.3556H10.3273C9.87983 17.1701 9.60994 15.9914 9.60994 14.9408C9.60994 10.1448 13.5986 6.30722 18.4024 6.49967Z"
-                                    fill="#6F73EE" />
-                                 <path fill-rule="evenodd" clip-rule="evenodd"
-                                    d="M9.55261 3.51429L11.2597 4.3787V0H7.1875V4.3787L8.89343 3.51505C9.09332 3.41377 9.33708 3.40576 9.55261 3.51429Z"
-                                    fill="#6F73EE" />
-                                 <path fill-rule="evenodd" clip-rule="evenodd"
-                                    d="M18.0578 7.95728C14.2011 7.95728 11.0742 11.0842 11.0742 14.9408C11.0742 16.7837 12.1175 19.2148 13.4485 21.2006C14.8786 23.3343 16.7093 25 18.0578 25C19.4063 25 21.237 23.3343 22.6671 21.2006C23.998 19.2148 25.0414 16.7837 25.0414 14.9408C25.0415 11.0842 21.9146 7.95728 18.0578 7.95728ZM18.0578 17.6287C16.5737 17.6287 15.3701 16.4251 15.3701 14.9408C15.3701 13.4567 16.5737 12.2534 18.0578 12.2534C19.5419 12.2534 20.7454 13.4567 20.7454 14.9408C20.7454 16.4251 19.5421 17.6287 18.0578 17.6287Z"
-                                    fill="#6F73EE" />
-                                 <path fill-rule="evenodd" clip-rule="evenodd"
-                                    d="M19.2821 14.9408C19.2821 15.6164 18.7345 16.164 18.0589 16.164C17.3835 16.164 16.8359 15.6164 16.8359 14.9408C16.8359 14.2654 17.3835 13.7178 18.0589 13.7178C18.7345 13.7178 19.2821 14.2654 19.2821 14.9408Z"
-                                    fill="#6F73EE" />
-                              </g>
-                              <defs>
-                                 <clipPath id="clip0_199_2363">
-                                    <rect width="25" height="25" fill="white" />
-                                 </clipPath>
-                              </defs>
-                           </svg>
-                        </div>
-                        <p class="prices-tabs__subtitle">
-                           Отправка заказа день в день
-                        </p>
-                        <p class="prices-tabs__text">
-                           Отправляем заказы по всей России день в день или забирайте товар самостоятельно в магазинах в
-                           Москве, Санкт-Петербурге и Краснодаре
-                        </p>
-                     </li>
-                     <li class="prices-tabs__item">
-                        <div class="prices-tabs__icon">
-                           <svg width="25" height="25" viewBox="0 0 25 25" fill="none"
-                              xmlns="http://www.w3.org/2000/svg">
-                              <g clip-path="url(#clip0_199_2369)">
-                                 <path
-                                    d="M10.8546 9.70644C11.819 8.66043 12.3503 7.25734 12.3503 5.75522C12.3503 2.89523 10.3075 0 6.40246 0C4.58512 0 3.05198 0.624205 1.96855 1.80509C1.00885 2.85126 0.480469 4.25404 0.480469 5.75522C0.480469 8.61552 2.51463 11.5106 6.40246 11.5106C8.22658 11.5107 9.76643 10.8869 10.8546 9.70644ZM6.40246 2.67599C8.54211 2.67599 9.51655 4.27322 9.51655 5.75725C9.51655 6.56452 9.24491 7.31183 8.75122 7.86127C8.20046 8.47495 7.40005 8.79945 6.43716 8.79945C4.2434 8.79945 3.24401 7.20237 3.24401 5.7185C3.24401 4.2043 4.22078 2.67599 6.40246 2.67599Z"
-                                    fill="#6F73EE" />
-                                 <path
-                                    d="M20.6066 2.22015C20.2527 2.22655 19.7695 2.44719 19.5328 2.71033L1.96559 22.242C1.72896 22.5053 1.89659 22.8744 2.25048 22.8744H4.54973C4.90362 22.8744 5.38632 22.6586 5.62256 22.3951L23.0812 2.86736C23.3174 2.6036 23.3017 2.17447 22.7169 2.17462L20.6066 2.22015Z"
-                                    fill="#6F73EE" />
-                                 <path
-                                    d="M18.6843 13.7083C16.902 13.7083 15.3979 14.321 14.335 15.4793C13.3936 16.5052 12.875 17.8816 12.875 19.3542C12.875 22.1598 14.8705 25 18.6843 25C20.4742 25 21.9844 24.3879 23.052 23.2301C23.9982 22.2039 24.5192 20.8274 24.5192 19.3542C24.5192 16.5487 22.515 13.7083 18.6843 13.7083ZM18.7187 22.4091C16.5844 22.4091 15.6119 20.8064 15.6119 19.3179C15.6119 18.5073 15.8834 17.7571 16.3767 17.2056C16.9266 16.5901 17.7245 16.2649 18.6843 16.2649C20.8188 16.2649 21.7909 17.8673 21.7909 19.3563C21.7909 20.1667 21.5193 20.917 21.0264 21.4685C20.4763 22.0839 19.6783 22.4091 18.7187 22.4091Z"
-                                    fill="#6F73EE" />
-                              </g>
-                              <defs>
-                                 <clipPath id="clip0_199_2369">
-                                    <rect width="25" height="25" fill="white" />
-                                 </clipPath>
-                              </defs>
-                           </svg>
-                        </div>
-                        <p class="prices-tabs__subtitle">
-                           Рассрочка без переплат
-                        </p>
-                        <p class="prices-tabs__text">
-                           В нашем магазине можно приобрести любой товар в рассрочку.
-                        </p>
-                        <a href="#" class="prices-tabs__link">
-                           Подробнее про условия рассрочки
-                        </a>
-                     </li>
-                     <li class="prices-tabs__block-link block-link">
-                        <p class="block-link__subtitle">
-                           Больше в каталоге
-                        </p>
-                        <a href="#" class="block-link__button underline_purple link-arrow">
-                           Перейти
-                        </a>
-                        <img class="block-link__image block-link__image_1"
-                           src="/img/favorable-prices/electric-scooter-image.png" alt="Электрический самокат">
-                     </li>
-                  </ul>
-                  <ul class="prices-tabs__list" id="pricesTab2">
-                     <li class="prices-tabs__item">
-                        <div class="prices-tabs__icon">
-                           <svg class="prices-tabs__icon" width="25" height="25" viewBox="0 0 25 25" fill="none"
-                              xmlns="http://www.w3.org/2000/svg">
-                              <g clip-path="url(#clip0_199_2303)">
-                                 <path
-                                    d="M23.9404 9.0679H18.7539L15.8446 2.40613C15.6827 2.03548 15.251 1.86609 14.8802 2.02805C14.5095 2.18992 14.3403 2.62171 14.5022 2.99241L17.1555 9.06795H7.84456L10.4979 2.99241C10.6597 2.62171 10.4905 2.18997 10.1198 2.02805C9.74915 1.86609 9.31731 2.03538 9.15549 2.40613L6.24612 9.0679H1.05964C0.381177 9.0679 -0.122338 9.68211 0.0260991 10.3286L2.7573 22.2246C2.86575 22.697 3.29514 23.0327 3.79085 23.0327H21.2092C21.7049 23.0327 22.1343 22.697 22.2428 22.2246L24.974 10.3286C25.1224 9.68216 24.6188 9.0679 23.9404 9.0679ZM6.38391 11.3142C6.28606 11.3142 6.1866 11.2945 6.09114 11.2528C5.72044 11.0909 5.55115 10.6592 5.71306 10.2884L6.26326 9.02854H7.86169L7.05544 10.8746C6.93528 11.15 6.66624 11.3142 6.38391 11.3142ZM8.83792 19.1265C8.83792 19.531 8.50999 19.8589 8.10549 19.8589C7.701 19.8589 7.37307 19.531 7.37307 19.1265V13.7554C7.37307 13.3509 7.701 13.023 8.10549 13.023C8.50999 13.023 8.83792 13.3509 8.83792 13.7554V19.1265ZM13.2324 19.1265C13.2324 19.531 12.9045 19.8589 12.5 19.8589C12.0955 19.8589 11.7676 19.531 11.7676 19.1265V13.7554C11.7676 13.3509 12.0955 13.023 12.5 13.023C12.9045 13.023 13.2324 13.3509 13.2324 13.7554V19.1265ZM17.627 19.1265C17.627 19.531 17.299 19.8589 16.8946 19.8589C16.4901 19.8589 16.1621 19.531 16.1621 19.1265V13.7554C16.1621 13.3509 16.4901 13.023 16.8946 13.023C17.299 13.023 17.627 13.3509 17.627 13.7554V19.1265ZM18.9089 11.2528C18.8135 11.2945 18.714 11.3142 18.6161 11.3142C18.3338 11.3142 18.0648 11.15 17.9446 10.8747L17.1383 9.02859H18.7367L19.2869 10.2885C19.4489 10.6592 19.2796 11.0909 18.9089 11.2528Z"
-                                    fill="#6F73EE" />
-                              </g>
-                              <defs>
-                                 <clipPath id="clip0_199_2303">
-                                    <rect width="25" height="25" fill="white" />
-                                 </clipPath>
-                              </defs>
-                           </svg>
-                        </div>
-                        <p class="prices-tabs__subtitle">
-                           Ремонт от 1 дня
-                        </p>
-                        <p class="prices-tabs__text">
-                           Устраним любую неисправность. Обычно делаем это
-                           за 1-3 дня, если ремонт сложный — предупредим заранее.
-                        </p>
-                     </li>
-                     <li class="prices-tabs__item">
-                        <div class="prices-tabs__icon">
-                           <svg width="25" height="25" viewBox="0 0 25 25" fill="none"
-                              xmlns="http://www.w3.org/2000/svg">
-                              <g clip-path="url(#clip0_199_2341)">
-                                 <path
-                                    d="M20.3125 16.6667C17.7281 16.6667 15.625 14.5635 15.625 11.9792C15.625 9.39479 17.7281 7.29167 20.3125 7.29167H22.9167V5.98958C22.9167 4.40937 21.6323 3.125 20.0521 3.125H2.86458C1.28438 3.125 0 4.40937 0 5.98958V19.0104C0 20.5906 1.28438 21.875 2.86458 21.875H20.0521C21.6323 21.875 22.9167 20.5906 22.9167 19.0104V16.6667H20.3125Z"
-                                    fill="#6F73EE" />
-                                 <path
-                                    d="M24.2187 8.85419H20.3125C18.5896 8.85419 17.1875 10.2563 17.1875 11.9792C17.1875 13.7021 18.5896 15.1042 20.3125 15.1042H24.2187C24.65 15.1042 25 14.7542 25 14.3229V9.63544C25 9.20419 24.65 8.85419 24.2187 8.85419ZM20.3125 13.0209C19.7375 13.0209 19.2708 12.5542 19.2708 11.9792C19.2708 11.4042 19.7375 10.9375 20.3125 10.9375C20.8875 10.9375 21.3542 11.4042 21.3542 11.9792C21.3542 12.5542 20.8875 13.0209 20.3125 13.0209Z"
-                                    fill="#6F73EE" />
-                              </g>
-                              <defs>
-                                 <clipPath id="clip0_199_2341">
-                                    <rect width="25" height="25" fill="white" />
-                                 </clipPath>
-                              </defs>
-                           </svg>
-
-                        </div>
-                        <p class="prices-tabs__subtitle">
-                           Гидроизоляция для долгой службы
-                        </p>
-                        <p class="prices-tabs__text">
-                           Покроем электросамокат изнутри специальным веществом, которое предотвратит попадание влаги и
-                           позволит кататься в любое время года.
-                        </p>
-                     </li>
-                     <li class="prices-tabs__item">
-                        <div class="prices-tabs__icon">
-                           <svg width="25" height="25" viewBox="0 0 25 25" fill="none"
-                              xmlns="http://www.w3.org/2000/svg">
-                              <g clip-path="url(#clip0_199_2344)">
-                                 <path
-                                    d="M25 12.5141L22.8604 9.72694L23.339 6.2641L20.0732 4.96905L18.7782 1.70329L15.3153 2.18189L12.5 0.0140991L9.71284 2.15374L6.25 1.67514L4.95495 4.9409L1.68919 6.23595L2.16779 9.69878L0 12.5141L2.13964 15.3013L1.66104 18.7641L4.9268 20.0591L6.22185 23.3249L9.68468 22.8463L12.4718 24.9859L15.259 22.8463L18.7218 23.3249L20.0169 20.0591L23.2827 18.7359L22.8041 15.2731L25 12.5141ZM11.4865 16.5682L7.31982 13.1335L8.22072 12.0355L11.3176 14.5693L16.6104 8.46005L17.6802 9.3891L11.4865 16.5682Z"
-                                    fill="#6F73EE" />
-                              </g>
-                              <defs>
-                                 <clipPath id="clip0_199_2344">
-                                    <rect width="25" height="25" fill="white" />
-                                 </clipPath>
-                              </defs>
-                           </svg>
-                        </div>
-                        <p class="prices-tabs__subtitle">
-                           Ремонтируем только то, <br> что сломалось
-                        </p>
-                        <p class="prices-tabs__text">
-                           Не навязываем услуги, диагностируем и заранее обговариваем стоимость ремонта.
-                        </p>
-                     </li>
-                     <li class="prices-tabs__item">
-                        <div class="prices-tabs__icon">
-                           <svg width="25" height="25" viewBox="0 0 25 25" fill="none"
-                              xmlns="http://www.w3.org/2000/svg">
-                              <g clip-path="url(#clip0_199_2363)">
-                                 <path fill-rule="evenodd" clip-rule="evenodd"
-                                    d="M18.4024 6.49967V0.732231C18.4024 0.327873 18.0746 0 17.6702 0H12.7254V5.56831C12.7254 6.09436 12.1645 6.49948 11.6159 6.19602L9.22466 4.98524L6.78516 6.22044C6.29363 6.46877 5.72524 6.10085 5.72562 5.56831L5.72429 0H0.779106C0.374748 0 0.046875 0.327873 0.046875 0.732231V17.6233C0.046875 18.0277 0.374748 18.3556 0.779106 18.3556H10.3273C9.87983 17.1701 9.60994 15.9914 9.60994 14.9408C9.60994 10.1448 13.5986 6.30722 18.4024 6.49967Z"
-                                    fill="#6F73EE" />
-                                 <path fill-rule="evenodd" clip-rule="evenodd"
-                                    d="M9.55261 3.51429L11.2597 4.3787V0H7.1875V4.3787L8.89343 3.51505C9.09332 3.41377 9.33708 3.40576 9.55261 3.51429Z"
-                                    fill="#6F73EE" />
-                                 <path fill-rule="evenodd" clip-rule="evenodd"
-                                    d="M18.0578 7.95728C14.2011 7.95728 11.0742 11.0842 11.0742 14.9408C11.0742 16.7837 12.1175 19.2148 13.4485 21.2006C14.8786 23.3343 16.7093 25 18.0578 25C19.4063 25 21.237 23.3343 22.6671 21.2006C23.998 19.2148 25.0414 16.7837 25.0414 14.9408C25.0415 11.0842 21.9146 7.95728 18.0578 7.95728ZM18.0578 17.6287C16.5737 17.6287 15.3701 16.4251 15.3701 14.9408C15.3701 13.4567 16.5737 12.2534 18.0578 12.2534C19.5419 12.2534 20.7454 13.4567 20.7454 14.9408C20.7454 16.4251 19.5421 17.6287 18.0578 17.6287Z"
-                                    fill="#6F73EE" />
-                                 <path fill-rule="evenodd" clip-rule="evenodd"
-                                    d="M19.2821 14.9408C19.2821 15.6164 18.7345 16.164 18.0589 16.164C17.3835 16.164 16.8359 15.6164 16.8359 14.9408C16.8359 14.2654 17.3835 13.7178 18.0589 13.7178C18.7345 13.7178 19.2821 14.2654 19.2821 14.9408Z"
-                                    fill="#6F73EE" />
-                              </g>
-                              <defs>
-                                 <clipPath id="clip0_199_2363">
-                                    <rect width="25" height="25" fill="white" />
-                                 </clipPath>
-                              </defs>
-                           </svg>
-                        </div>
-                        <p class="prices-tabs__subtitle">
-                           Даем гарантию 14 дней на ремонт
-                        </p>
-                     </li>
-                     <li class="prices-tabs__item">
-                        <div class="prices-tabs__icon">
-                           <svg width="25" height="25" viewBox="0 0 25 25" fill="none"
-                              xmlns="http://www.w3.org/2000/svg">
-                              <g clip-path="url(#clip0_199_2369)">
-                                 <path
-                                    d="M10.8546 9.70644C11.819 8.66043 12.3503 7.25734 12.3503 5.75522C12.3503 2.89523 10.3075 0 6.40246 0C4.58512 0 3.05198 0.624205 1.96855 1.80509C1.00885 2.85126 0.480469 4.25404 0.480469 5.75522C0.480469 8.61552 2.51463 11.5106 6.40246 11.5106C8.22658 11.5107 9.76643 10.8869 10.8546 9.70644ZM6.40246 2.67599C8.54211 2.67599 9.51655 4.27322 9.51655 5.75725C9.51655 6.56452 9.24491 7.31183 8.75122 7.86127C8.20046 8.47495 7.40005 8.79945 6.43716 8.79945C4.2434 8.79945 3.24401 7.20237 3.24401 5.7185C3.24401 4.2043 4.22078 2.67599 6.40246 2.67599Z"
-                                    fill="#6F73EE" />
-                                 <path
-                                    d="M20.6066 2.22015C20.2527 2.22655 19.7695 2.44719 19.5328 2.71033L1.96559 22.242C1.72896 22.5053 1.89659 22.8744 2.25048 22.8744H4.54973C4.90362 22.8744 5.38632 22.6586 5.62256 22.3951L23.0812 2.86736C23.3174 2.6036 23.3017 2.17447 22.7169 2.17462L20.6066 2.22015Z"
-                                    fill="#6F73EE" />
-                                 <path
-                                    d="M18.6843 13.7083C16.902 13.7083 15.3979 14.321 14.335 15.4793C13.3936 16.5052 12.875 17.8816 12.875 19.3542C12.875 22.1598 14.8705 25 18.6843 25C20.4742 25 21.9844 24.3879 23.052 23.2301C23.9982 22.2039 24.5192 20.8274 24.5192 19.3542C24.5192 16.5487 22.515 13.7083 18.6843 13.7083ZM18.7187 22.4091C16.5844 22.4091 15.6119 20.8064 15.6119 19.3179C15.6119 18.5073 15.8834 17.7571 16.3767 17.2056C16.9266 16.5901 17.7245 16.2649 18.6843 16.2649C20.8188 16.2649 21.7909 17.8673 21.7909 19.3563C21.7909 20.1667 21.5193 20.917 21.0264 21.4685C20.4763 22.0839 19.6783 22.4091 18.7187 22.4091Z"
-                                    fill="#6F73EE" />
-                              </g>
-                              <defs>
-                                 <clipPath id="clip0_199_2369">
-                                    <rect width="25" height="25" fill="white" />
-                                 </clipPath>
-                              </defs>
-                           </svg>
-                        </div>
-                        <p class="prices-tabs__subtitle">
-                           Оригинальные запчасти
-                        </p>
-                        <p class="prices-tabs__text">
-                           Благодаря прямой связи с производителем имеем в наличии все необходимые новые комплектующие
-                           для ремонта.
-                        </p>
-                     </li>
-                     <li class="prices-tabs__block-link block-link">
-                        <p class="block-link__subtitle">
-                           Больше в сервисе
-                        </p>
-                        <a href="#" class="block-link__button">
-                           Перейти
-                        </a>
-                        <img class="block-link__image block-link__image_2" src="/img/favorable-prices/drill-image.png"
-                           alt="Дрель">
-                     </li>
-                  </ul>
-               </div>
-            </div>
-         </section>
-         <!-- favorable-prices -->
+         <!-- card -->
 
          <!-- user-feedback -->
          <article class="user-feedback">
@@ -2364,199 +2428,50 @@ if ($query = $db->query("SELECT * FROM `popular-product`")) {
          </article>
          <!-- user-feedback -->
 
-         <!-- video-reviews -->
-         <article class="video-reviews">
-            <div class="video-reviews__container container">
-               <div class="video-reviews__header">
-                  <div class="video-reviews__info">
-                     <h2 class="video-reviews__big-title big-title">
-                        Видеообзоры
-                     </h2>
-                     <a href="#" class="video-reviews__link-arrow link-arrow underline_purple">
-                        Смотреть все видеообзоры
-                     </a>
-                  </div>
-                  <p class="video-reviews__text">
-                     Узнайте больше о самокатах Kugoo и посмотрите сравнительные обзоры разных моделей на нашем
-                     YouTube-канале.
-                  </p>
-               </div>
-               <div class="video-reviews__wrapper">
-                  <div class="video-reviews__slider-reviews slider-reviews swiper">
-                     <div class="slider-reviews__wrapper swiper-wrapper">
-                        <article class="slider-reviews__slide swiper-slide">
-                           <div class="slider-reviews__video slider-reviews__video-bg1">
-                              <button class="slider-reviews__button" type="button">
-                                 <svg width="21" height="24" viewBox="0 0 21 24" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                       d="M19.6133 11.1911C20.2799 11.576 20.2799 12.5382 19.6133 12.9231L1.78471 23.2165C1.11804 23.6014 0.284709 23.1202 0.284709 22.3504L0.28471 1.76377C0.28471 0.993967 1.11804 0.512845 1.78471 0.897745L19.6133 11.1911Z"
-                                       fill="#6F73EE" />
-                                 </svg>
-                              </button>
-                           </div>
-                           <p class="slider-reviews__text">
-                              Крутой и городской? <br> Обзор Kugoo XS Plus
-                           </p>
-                        </article>
-                        <article class="slider-reviews__slide swiper-slide">
-                           <div class="slider-reviews__video slider-reviews__video-bg2">
-                              <button class="slider-reviews__button" type="button">
-                                 <svg width="21" height="24" viewBox="0 0 21 24" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                       d="M19.6133 11.1911C20.2799 11.576 20.2799 12.5382 19.6133 12.9231L1.78471 23.2165C1.11804 23.6014 0.284709 23.1202 0.284709 22.3504L0.28471 1.76377C0.28471 0.993967 1.11804 0.512845 1.78471 0.897745L19.6133 11.1911Z"
-                                       fill="#6F73EE" />
-                                 </svg>
-                              </button>
-                           </div>
-                           <p class="slider-reviews__text">
-                              Крутой и городской? <br> Обзор Kugoo XS Plus
-                           </p>
-                        </article>
-                        <article class="slider-reviews__slide swiper-slide">
-                           <div class="slider-reviews__video slider-reviews__video-bg3">
-                              <button class="slider-reviews__button" type="button">
-                                 <svg width="21" height="24" viewBox="0 0 21 24" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                       d="M19.6133 11.1911C20.2799 11.576 20.2799 12.5382 19.6133 12.9231L1.78471 23.2165C1.11804 23.6014 0.284709 23.1202 0.284709 22.3504L0.28471 1.76377C0.28471 0.993967 1.11804 0.512845 1.78471 0.897745L19.6133 11.1911Z"
-                                       fill="#6F73EE" />
-                                 </svg>
-                              </button>
-                           </div>
-                           <p class="slider-reviews__text">
-                              Крутой и городской? <br> Обзор Kugoo XS Plus
-                           </p>
-                        </article>
-                     </div>
-                  </div>
-                  <button type="button" class="slider-reviews__next">
-                     <svg width="10" height="18" viewBox="0 0 10 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" clip-rule="evenodd"
-                           d="M2.04103 0.357965L9.64981 8.1358C10.1167 8.61308 10.1167 9.38692 9.64981 9.8642L2.04103 17.642C1.57411 18.1193 0.817098 18.1193 0.350185 17.642C-0.116728 17.1647 -0.116728 16.3909 0.350185 15.9136L7.11355 9L0.350185 2.08637C-0.116728 1.60909 -0.116728 0.835252 0.350185 0.357965C0.817098 -0.119322 1.57411 -0.119322 2.04103 0.357965Z"
-                           fill="white" />
-                     </svg>
-                  </button>
-               </div>
-            </div>
-         </article>
-         <!-- video-reviews -->
-
-         <!-- blog-articles -->
-         <article class="blog-articles">
-            <div class="blog-articles__container container">
-               <h2 class="blog-articles__big-title big-title">
-                  Новые статьи в блоге
-               </h2>
-               <div class="blog-articles__slider-blog slider-blog swiper">
-                  <div class="slider-blog__wrapper swiper-wrapper">
-
-                  <?php foreach ($infoBlogArticles as $infoBlogArticlesItem): ?>
-                     <article class="slider-blog__slide swiper-slide">
-                        <a href="<?= $infoBlogArticlesItem['link'] ?>" class="slider-blog__image">
-                           <img src="<?= $infoBlogArticlesItem['image'] ?>" alt="Photo">
+         <!-- row-blocks -->
+         <article class="row-blocks">
+            <div class="row-blocks__container container">
+               <ul class="row-blocks__list">
+                  <li class="row-blocks__item">
+                     <div class="row-blocks__info">
+                        <h3 class="row-blocks__middle-title middle-title">
+                           Хотите проверить <br> товар перед <br> покупкой?
+                        </h3>
+                        <p class="row-blocks__text">
+                           Продемонстрируем нужный товар онлайн или в магазине
+                        </p>
+                        <a href="#" class="row-blocks__link link-arrow underline_purple">
+                           Подобрать модель
                         </a>
-                        <div class="slider-blog__info">
-                           <a href="<?= $infoBlogArticlesItem['link'] ?>" class="slider-blog__title">
-                              <?= $infoBlogArticlesItem['title'] ?>
-                           </a>
-                           <p class="slider-blog__text">
-                              <?= $infoBlogArticlesItem['text'] ?>
-                           </p>
-                           <div class="slider-blog__footer">
-                              <div class="slider-blog__date-blog date-blog">
-                                 <div class="date-blog__icon">
-                                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
-                                       xmlns="http://www.w3.org/2000/svg">
-                                       <path
-                                          d="M17 6.28125C17 5.23719 17 4.50678 17 4.4375C17 3.66209 16.3692 3.03125 15.5938 3.03125H15.4062V4.75C15.4062 5.00887 15.1964 5.21875 14.9375 5.21875C14.6786 5.21875 14.4688 5.00887 14.4688 4.75C14.4688 4.22378 14.4688 2.774 14.4688 2.25C14.4688 1.99112 14.2589 1.78125 14 1.78125C13.7411 1.78125 13.5312 1.99112 13.5312 2.25V3.03125H10.4062V4.75C10.4062 5.00887 10.1964 5.21875 9.9375 5.21875C9.67863 5.21875 9.46875 5.00887 9.46875 4.75C9.46875 4.22378 9.46875 2.774 9.46875 2.25C9.46875 1.99112 9.25887 1.78125 9 1.78125C8.74113 1.78125 8.53125 1.99112 8.53125 2.25V3.03125H5.40625V4.75C5.40625 5.00887 5.19637 5.21875 4.9375 5.21875C4.67863 5.21875 4.46875 5.00887 4.46875 4.75C4.46875 4.22378 4.46875 2.774 4.46875 2.25C4.46875 1.99112 4.25887 1.78125 4 1.78125C3.74113 1.78125 3.53125 1.99112 3.53125 2.25V3.03125H2.40625C1.63084 3.03125 1 3.66209 1 4.4375V6.28125H17Z"
-                                          fill="#5D6C7B" />
-                                       <path
-                                          d="M1 7.21875V14.8125C1 15.5879 1.63084 16.2188 2.40625 16.2188H15.5938C16.3692 16.2188 17 15.5879 17 14.8125C17 14.6117 17 10.2246 17 7.21875C16.7083 7.21875 1.16138 7.21875 1 7.21875ZM5.5 13.7188H4.5C4.24113 13.7188 4.03125 13.5089 4.03125 13.25C4.03125 12.9911 4.24113 12.7812 4.5 12.7812H5.5C5.75887 12.7812 5.96875 12.9911 5.96875 13.25C5.96875 13.5089 5.75887 13.7188 5.5 13.7188ZM5.5 11.7188H4.5C4.24113 11.7188 4.03125 11.5089 4.03125 11.25C4.03125 10.9911 4.24113 10.7812 4.5 10.7812H5.5C5.75887 10.7812 5.96875 10.9911 5.96875 11.25C5.96875 11.5089 5.75887 11.7188 5.5 11.7188ZM5.5 9.71875H4.5C4.24113 9.71875 4.03125 9.50887 4.03125 9.25C4.03125 8.99112 4.24113 8.78125 4.5 8.78125H5.5C5.75887 8.78125 5.96875 8.99112 5.96875 9.25C5.96875 9.50887 5.75887 9.71875 5.5 9.71875ZM9.5 13.7188H8.5C8.24113 13.7188 8.03125 13.5089 8.03125 13.25C8.03125 12.9911 8.24113 12.7812 8.5 12.7812H9.5C9.75887 12.7812 9.96875 12.9911 9.96875 13.25C9.96875 13.5089 9.75887 13.7188 9.5 13.7188ZM9.5 11.7188H8.5C8.24113 11.7188 8.03125 11.5089 8.03125 11.25C8.03125 10.9911 8.24113 10.7812 8.5 10.7812H9.5C9.75887 10.7812 9.96875 10.9911 9.96875 11.25C9.96875 11.5089 9.75887 11.7188 9.5 11.7188ZM9.5 9.71875H8.5C8.24113 9.71875 8.03125 9.50887 8.03125 9.25C8.03125 8.99112 8.24113 8.78125 8.5 8.78125H9.5C9.75887 8.78125 9.96875 8.99112 9.96875 9.25C9.96875 9.50887 9.75887 9.71875 9.5 9.71875ZM13.5 13.7188H12.5C12.2411 13.7188 12.0312 13.5089 12.0312 13.25C12.0312 12.9911 12.2411 12.7812 12.5 12.7812H13.5C13.7589 12.7812 13.9688 12.9911 13.9688 13.25C13.9688 13.5089 13.7589 13.7188 13.5 13.7188ZM13.5 11.7188H12.5C12.2411 11.7188 12.0312 11.5089 12.0312 11.25C12.0312 10.9911 12.2411 10.7812 12.5 10.7812H13.5C13.7589 10.7812 13.9688 10.9911 13.9688 11.25C13.9688 11.5089 13.7589 11.7188 13.5 11.7188ZM13.5 9.71875H12.5C12.2411 9.71875 12.0312 9.50887 12.0312 9.25C12.0312 8.99112 12.2411 8.78125 12.5 8.78125H13.5C13.7589 8.78125 13.9688 8.99112 13.9688 9.25C13.9688 9.50887 13.7589 9.71875 13.5 9.71875Z"
-                                          fill="#5D6C7B" />
-                                    </svg>
-                                 </div>
-                                 <time class="date-blog__time" datetime="06.12.2022">
-                                    <?= $infoBlogArticlesItem['date'] ?>
-                                 </time>
-                              </div>
-                              <div class="slider-blog__views-blog views-blog">
-                                 <div class="views-blog__icon">
-                                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
-                                       xmlns="http://www.w3.org/2000/svg">
-                                       <path
-                                          d="M9 10.125C9.62132 10.125 10.125 9.62132 10.125 9C10.125 8.37868 9.62132 7.875 9 7.875C8.37868 7.875 7.875 8.37868 7.875 9C7.875 9.62132 8.37868 10.125 9 10.125Z"
-                                          fill="#5D6C7B" />
-                                       <path
-                                          d="M16.4016 8.62503C15.9216 7.79253 13.2816 3.61503 8.79657 3.75003C4.64907 3.85503 2.24907 7.50003 1.59657 8.62503C1.53075 8.73904 1.49609 8.86837 1.49609 9.00003C1.49609 9.13168 1.53075 9.26101 1.59657 9.37503C2.06907 10.1925 4.59658 14.25 9.01408 14.25H9.20158C13.3491 14.145 15.7566 10.5 16.4016 9.37503C16.4674 9.26101 16.5021 9.13168 16.5021 9.00003C16.5021 8.86837 16.4674 8.73904 16.4016 8.62503ZM8.99907 11.625C8.4799 11.625 7.97238 11.4711 7.5407 11.1826C7.10902 10.8942 6.77257 10.4842 6.57389 10.0046C6.37521 9.52491 6.32323 8.99711 6.42451 8.48791C6.5258 7.97871 6.77581 7.51098 7.14292 7.14387C7.51003 6.77676 7.97776 6.52675 8.48696 6.42546C8.99616 6.32418 9.52396 6.37616 10.0036 6.57484C10.4833 6.77352 10.8932 7.10998 11.1817 7.54165C11.4701 7.97333 11.6241 8.48085 11.6241 9.00003C11.6241 9.69622 11.3475 10.3639 10.8552 10.8562C10.3629 11.3485 9.69527 11.625 8.99907 11.625Z"
-                                          fill="#5D6C7B" />
-                                    </svg>
-                                 </div>
-                                 <span class="views-blog__numb">
-                                    <?= $infoBlogArticlesItem['viewing'] ?>
-                                 </span>
-                              </div>
-                           </div>
-                        </div>
-                     </article>
-                     <?php endforeach; ?>
-                     
-                  </div>
-                  <button type="button" class="slider-blog__button">
-                     <svg width="10" height="18" viewBox="0 0 10 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" clip-rule="evenodd"
-                           d="M2.04103 0.357965L9.64981 8.1358C10.1167 8.61308 10.1167 9.38692 9.64981 9.8642L2.04103 17.642C1.57411 18.1193 0.817098 18.1193 0.350185 17.642C-0.116728 17.1647 -0.116728 16.3909 0.350185 15.9136L7.11355 9L0.350185 2.08637C-0.116728 1.60909 -0.116728 0.835252 0.350185 0.357965C0.817098 -0.119322 1.57411 -0.119322 2.04103 0.357965Z"
-                           fill="white" />
-                     </svg>
-                  </button>
-               </div>
-            </div>
-         </article>
-         <!-- blog-articles -->
-
-         <!-- what -->
-         <article class="what">
-            <div class="what__container container">
-               <h2 class="what__big-title big-title">
-                  Отвечаем на вопросы покупателей
-               </h2>
-               <ul class="what__accordion accordion">
-
-               <?php foreach ($infoQuestions as $infoQuestionsItem): ?>
-                  <li class="accordion__item">
-                     <div class="accordion__header">
-                        <p class="accordion__question">
-                           <?= $infoQuestionsItem['question']?>
-                        </p> 
-                        <svg class="accordion__icon" width="21" height="20" viewBox="0 0 21 20" fill="none"
-                           xmlns="http://www.w3.org/2000/svg">
-                           <g clip-path="url(#clip0_207_2653)">
-                              <path
-                                 d="M10.1406 10H0.140625M10.1406 20V10V20ZM10.1406 10V0V10ZM10.1406 10H20.1406H10.1406Z"
-                                 stroke="#282739" stroke-width="2" />
-                           </g>
-                           <defs>
-                              <clipPath id="clip0_207_2653">
-                                 <rect width="20" height="20" fill="white" transform="translate(0.140625)" />
-                              </clipPath>
-                           </defs>
-                        </svg>
                      </div>
-                     <div class="accordion__answer">
-                        <p class="accordion__text">
-                           <?= $infoQuestionsItem['answer']?>
-                        </p> 
+                     <div class="row-blocks__image row-blocks__image_3">
+                        <img src="/img/row-blocks/row-blocks-image3.png" alt="Подбор модели электросамоката">
                      </div>
                   </li>
-                  <?php endforeach; ?>
+                  <li class="row-blocks__item">
+                     <div class="row-blocks__info">
+                        <h3 class="row-blocks__middle-title middle-title">
+                           Нашли Kugoo Jilong дешевле?
+                        </h3>
+                        <p class="row-blocks__text">
+                           Сообщите нам в каком магазине цена ниже, а мы сделаем вам крутое спецпредложение!
+                        </p>
+                        <a href="#" class="row-blocks__link link-arrow underline_purple">
+                           Подобрать модель
+                        </a>
+                     </div>
+                     <div class="row-blocks__image row-blocks__image_4">
+                        <img src="/img/row-blocks/row-blocks-image4.png" alt="Сервисное
+                        обслуживание">
+                     </div>
+                  </li>
                </ul>
             </div>
          </article>
-         <!-- what -->
+         <!-- row-blocks -->
 
-         <!-- often-buy -->
-         <section class="often-buy">
+          <!-- often-buy -->
+          <section class="often-buy">
             <div class="often-buy__container container">
                <h2 class="often-buy__big-title big-title">
                   часто покупают
@@ -2567,7 +2482,7 @@ if ($query = $db->query("SELECT * FROM `popular-product`")) {
                      <div class="product-card__header">
                         <span class="product-card__subtitle product-card__subtitle_hit">
                            <?= $infoPopularProductsItem['hype']?>
-                        </span> 
+                        </span>  
                         <button type="button" class="product-card__icon-card icon-card icon-card_no-bg">
                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
                               xmlns="http://www.w3.org/2000/svg">
@@ -2586,11 +2501,11 @@ if ($query = $db->query("SELECT * FROM `popular-product`")) {
                      </div>
                      <a href="<?= $infoPopularProductsItem['link']?>" class="product-card__image">
                         <img src="<?= $infoPopularProductsItem['image']?>" alt="Самокат">
-                     </a> 
+                     </a>  
                      <div class="product-card__info">
                         <a href="<?= $infoPopularProductsItem['link']?>" class="product-card__title">
-                           <?= $infoPopularProductsItem['title']?> 
-                        </a> 
+                           <?= $infoPopularProductsItem['title']?>  
+                        </a>  
                         <ul class="product-card__desk-list desk-list">
                            <li class="desk-list__item">
                               <svg class="desk-list__icon" width="18" height="18" viewBox="0 0 18 18" fill="none"
@@ -2601,7 +2516,7 @@ if ($query = $db->query("SELECT * FROM `popular-product`")) {
                               </svg>
                               <span class="desk-list__text">
                                  <?= $infoPopularProductsItem['accumulator']?> mAh
-                              </span> 
+                              </span>  
                            </li>
                            <li class="desk-list__item">
                               <svg class="desk-list__icon" width="18" height="18" viewBox="0 0 18 18" fill="none"
@@ -2612,7 +2527,7 @@ if ($query = $db->query("SELECT * FROM `popular-product`")) {
                               </svg>
                               <span class="desk-list__text">
                                  <?= $infoPopularProductsItem['power']?> л.с.
-                              </span> 
+                              </span>  
                            </li>
                            <li class="desk-list__item">
                               <svg class="desk-list__icon" width="18" height="18" viewBox="0 0 18 18" fill="none"
@@ -2641,7 +2556,7 @@ if ($query = $db->query("SELECT * FROM `popular-product`")) {
                               </svg>
                               <span class="desk-list__text">
                                  <?= $infoPopularProductsItem['speedometer']?> км/ч
-                              </span> 
+                              </span>  
                            </li>
                            <li class="desk-list__item">
                               <svg class="desk-list__icon" width="18" height="18" viewBox="0 0 18 18" fill="none"
@@ -2662,17 +2577,17 @@ if ($query = $db->query("SELECT * FROM `popular-product`")) {
                               </svg>
                               <span class="desk-list__text">
                                  <?= $infoPopularProductsItem['time']?> часов
-                              </span> 
+                              </span>  
                            </li>
                         </ul>
                         <div class="product-card__footer">
                            <div class="product-card__price-card price-card">
                               <span class="price-card__old">
                                  <?= $infoPopularProductsItem['old-price']?> ₽
-                              </span> 
+                              </span>  
                               <span class="price-card__numb">
                                  <?= $infoPopularProductsItem['new-price']?> ₽
-                              </span> 
+                              </span>  
                            </div>
                            <div class="product-card__icons">
                               <button type="button"
@@ -2727,7 +2642,7 @@ if ($query = $db->query("SELECT * FROM `popular-product`")) {
                         </div>
                      </div>
                      <a href="<?= $infoPopularProductsItem['link']?>" class="product-card__button button_purple">
-                        Купить в 1 клик 
+                        Купить в 1 клик  
                      </a>
                   </article>
                   <?php endforeach; ?>
@@ -2737,6 +2652,7 @@ if ($query = $db->query("SELECT * FROM `popular-product`")) {
          <!-- often-buy -->
 
       </main>
+      <!-- main -->
 
       <!-- footer -->
       <footer class="footer">

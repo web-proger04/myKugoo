@@ -1,4 +1,4 @@
-const productsBtn = document.querySelectorAll('.product-card__icon_basket');
+const productsBtn = document.querySelectorAll('.icon-card_basket');
 const basketProductList = document.querySelector('.basket__list');
 const basket = document.querySelector('.basket');
 const basketQuantity = document.querySelector('.basket__quantity');
@@ -71,11 +71,11 @@ const deleteProducts = productParent => {
 
    if (!id) return;
 
-   const productBtn = document.querySelector(`.product-card__content[data-id="${id}"] .product-card__icon_basket`);
+   const productBtn = document.querySelector(`.product-card__content[data-id="${id}"] .icon-card_basket`);
 
    if (productBtn) {
       productBtn.disabled = false;
-      productBtn.classList.remove("product-card__icon_active");
+      productBtn.classList.remove("icon-card_active");
    }
 
    let currentPrice = parseInt(priceWithoutSpaces(productParent.querySelector(".item-basket__price").textContent));
@@ -101,7 +101,7 @@ productsBtn.forEach(el => {
       basketProductList.insertAdjacentHTML('afterbegin', generateCartProduct(img, title, priceNumber, id));
       printQuantity();
       self.disabled = true;
-      self.classList.add('product-card__icon_active');
+      self.classList.add('icon-card_active');
    });
 });
 
