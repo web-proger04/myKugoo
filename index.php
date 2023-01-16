@@ -2528,7 +2528,7 @@ if ($query = $db->query("SELECT * FROM `popular-product`")) {
                      <div class="accordion__header">
                         <p class="accordion__question">
                            <?= $infoQuestionsItem['question']?>
-                        </p> 
+                        </p>  
                         <svg class="accordion__icon" width="21" height="20" viewBox="0 0 21 20" fill="none"
                            xmlns="http://www.w3.org/2000/svg">
                            <g clip-path="url(#clip0_207_2653)">
@@ -2546,7 +2546,7 @@ if ($query = $db->query("SELECT * FROM `popular-product`")) {
                      <div class="accordion__answer">
                         <p class="accordion__text">
                            <?= $infoQuestionsItem['answer']?>
-                        </p> 
+                        </p>  
                      </div>
                   </li>
                   <?php endforeach; ?>
@@ -2567,7 +2567,7 @@ if ($query = $db->query("SELECT * FROM `popular-product`")) {
                      <div class="product-card__header">
                         <span class="product-card__subtitle product-card__subtitle_hit">
                            <?= $infoPopularProductsItem['hype']?>
-                        </span> 
+                        </span>  
                         <button type="button" class="product-card__icon-card icon-card icon-card_no-bg">
                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
                               xmlns="http://www.w3.org/2000/svg">
@@ -2586,11 +2586,11 @@ if ($query = $db->query("SELECT * FROM `popular-product`")) {
                      </div>
                      <a href="<?= $infoPopularProductsItem['link']?>" class="product-card__image">
                         <img src="<?= $infoPopularProductsItem['image']?>" alt="Самокат">
-                     </a> 
+                     </a>  
                      <div class="product-card__info">
                         <a href="<?= $infoPopularProductsItem['link']?>" class="product-card__title">
-                           <?= $infoPopularProductsItem['title']?> 
-                        </a> 
+                           <?= $infoPopularProductsItem['title']?>  
+                        </a>  
                         <ul class="product-card__desk-list desk-list">
                            <li class="desk-list__item">
                               <svg class="desk-list__icon" width="18" height="18" viewBox="0 0 18 18" fill="none"
@@ -2601,7 +2601,7 @@ if ($query = $db->query("SELECT * FROM `popular-product`")) {
                               </svg>
                               <span class="desk-list__text">
                                  <?= $infoPopularProductsItem['accumulator']?> mAh
-                              </span> 
+                              </span>  
                            </li>
                            <li class="desk-list__item">
                               <svg class="desk-list__icon" width="18" height="18" viewBox="0 0 18 18" fill="none"
@@ -2612,7 +2612,7 @@ if ($query = $db->query("SELECT * FROM `popular-product`")) {
                               </svg>
                               <span class="desk-list__text">
                                  <?= $infoPopularProductsItem['power']?> л.с.
-                              </span> 
+                              </span>  
                            </li>
                            <li class="desk-list__item">
                               <svg class="desk-list__icon" width="18" height="18" viewBox="0 0 18 18" fill="none"
@@ -2641,7 +2641,7 @@ if ($query = $db->query("SELECT * FROM `popular-product`")) {
                               </svg>
                               <span class="desk-list__text">
                                  <?= $infoPopularProductsItem['speedometer']?> км/ч
-                              </span> 
+                              </span>  
                            </li>
                            <li class="desk-list__item">
                               <svg class="desk-list__icon" width="18" height="18" viewBox="0 0 18 18" fill="none"
@@ -2662,17 +2662,17 @@ if ($query = $db->query("SELECT * FROM `popular-product`")) {
                               </svg>
                               <span class="desk-list__text">
                                  <?= $infoPopularProductsItem['time']?> часов
-                              </span> 
+                              </span>  
                            </li>
                         </ul>
                         <div class="product-card__footer">
                            <div class="product-card__price-card price-card">
                               <span class="price-card__old">
                                  <?= $infoPopularProductsItem['old-price']?> ₽
-                              </span> 
+                              </span>  
                               <span class="price-card__numb">
                                  <?= $infoPopularProductsItem['new-price']?> ₽
-                              </span> 
+                              </span>  
                            </div>
                            <div class="product-card__icons">
                               <button type="button"
@@ -2727,7 +2727,7 @@ if ($query = $db->query("SELECT * FROM `popular-product`")) {
                         </div>
                      </div>
                      <a href="<?= $infoPopularProductsItem['link']?>" class="product-card__button button_purple">
-                        Купить в 1 клик 
+                        Купить в 1 клик  
                      </a>
                   </article>
                   <?php endforeach; ?>
